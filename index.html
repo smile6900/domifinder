@@ -6,165 +6,131 @@
 <title>DomiFinder – נדל"ן בינלאומי</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --blue-dark:  #1277E1;
-    --blue-mid:   #0D6ECF;
-    --blue-deep:  #0A1F44;
-    --blue-navy:  #10294F;
-    --blue-card:  #0E2247;
-    --blue-hover: #0C1E3D;
-    --blue-border:#1A3A6B;
-    --blue-light: #E8F0FE;
-    --white:      #FFFFFF;
-    --text:       #FFFFFF;
-    --text2:      #9DB8D8;
-    --text3:      #5C82A8;
-    --gold:       #F5A623;
-    --green:      #2ECC71;
-    --radius:     10px;
-    --shadow:     0 8px 32px rgba(0,0,0,0.35);
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Heebo',sans-serif; background:var(--blue-deep); color:var(--text); min-height:100vh; direction:rtl; }
-
-  nav {
-    position:sticky; top:0; z-index:100;
-    background:rgba(10,31,68,0.97); backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--blue-border);
-    padding:0 2rem; display:flex; align-items:center; justify-content:space-between; height:62px;
-  }
-  .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
-  .logo-icon { width:36px; height:36px; background:var(--blue-dark); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; color:#fff; font-size:15px; }
-  .logo-text { font-size:21px; font-weight:800; color:#fff; }
-  .logo-text span { color:var(--gold); }
-  .nav-links { display:flex; gap:2rem; list-style:none; }
-  .nav-links a { color:var(--text2); text-decoration:none; font-size:14px; font-weight:500; transition:color .2s; }
-  .nav-links a:hover { color:#fff; }
-  .nav-right { display:flex; gap:10px; align-items:center; }
-  .export-btn { background:transparent; color:var(--text2); border:1px solid var(--blue-border); padding:7px 14px; border-radius:7px; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; transition:all .2s; }
-  .export-btn:hover { color:#fff; border-color:var(--blue-dark); }
-  .nav-btn { background:var(--blue-dark); color:#fff; border:none; padding:8px 20px; border-radius:7px; font-weight:700; font-size:13px; cursor:pointer; font-family:inherit; transition:all .2s; }
-  .nav-btn:hover { background:#1585f5; transform:translateY(-1px); }
-
-  .hero { background:linear-gradient(160deg,#0A1F44 0%,#0D2252 50%,#0A1F44 100%); padding:70px 2rem 56px; text-align:center; position:relative; overflow:hidden; }
-  .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(18,119,225,0.18) 0%,transparent 60%); pointer-events:none; }
-  .hero-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(18,119,225,0.18); border:1px solid rgba(18,119,225,0.35); color:var(--text2); padding:5px 14px; border-radius:20px; font-size:12px; font-weight:600; margin-bottom:20px; }
-  .hero h1 { font-size:clamp(2rem,4.5vw,3.2rem); font-weight:800; line-height:1.2; margin-bottom:14px; color:#fff; }
-  .hero h1 em { color:var(--gold); font-style:normal; }
-  .hero p { color:var(--text2); font-size:1.05rem; margin-bottom:36px; }
-
-  .search-wrap { max-width:780px; margin:0 auto 28px; background:#fff; border-radius:14px; display:flex; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.3); }
-  .search-tabs { display:flex; border-left:1px solid #e2e8f0; flex-shrink:0; }
-  .search-tab { padding:0 18px; font-size:13px; font-weight:700; color:#64748b; cursor:pointer; border:none; background:transparent; font-family:inherit; transition:all .2s; border-bottom:2px solid transparent; white-space:nowrap; }
-  .search-tab.active { color:var(--blue-dark); border-bottom-color:var(--blue-dark); background:var(--blue-light); }
-  .search-input { flex:1; border:none; outline:none; color:#1a202c; font-size:15px; font-family:inherit; padding:14px 16px; direction:rtl; background:transparent; }
-  .search-input::placeholder { color:#94a3b8; }
-  .search-btn { background:var(--blue-dark); color:#fff; border:none; padding:14px 28px; font-weight:700; cursor:pointer; font-family:inherit; font-size:14px; white-space:nowrap; transition:background .2s; flex-shrink:0; display:flex; align-items:center; gap:6px; }
-  .search-btn:hover { background:#1585f5; }
-  .search-btn svg { width:16px; height:16px; }
-
-  .country-pills { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
-  .cpill { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); color:var(--text2); padding:5px 14px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; transition:all .2s; }
-  .cpill:hover { background:rgba(18,119,225,0.25); border-color:var(--blue-dark); color:#fff; }
-  .cpill.active { background:var(--blue-dark); border-color:var(--blue-dark); color:#fff; }
-
-  .stats-bar { background:rgba(10,31,68,0.85); border-top:1px solid var(--blue-border); border-bottom:1px solid var(--blue-border); padding:16px 2rem; display:flex; justify-content:center; gap:4rem; }
-  .stat { text-align:center; }
-  .stat-num { font-size:1.35rem; font-weight:800; color:#fff; }
-  .stat-label { font-size:11px; color:var(--text3); margin-top:2px; font-weight:500; }
-
-  .filters-section { max-width:1200px; margin:24px auto 0; padding:0 2rem; }
-  .filters-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; }
-  .filter-group { display:flex; flex-direction:column; gap:4px; }
-  .filter-label { font-size:11px; color:var(--text3); font-weight:700; text-transform:uppercase; letter-spacing:.6px; }
-  .filter-tab-group { display:flex; gap:4px; flex-wrap:wrap; }
-  .ftab { padding:8px 15px; border-radius:7px; background:var(--blue-card); border:1px solid var(--blue-border); color:var(--text2); font-size:13px; font-weight:600; cursor:pointer; transition:all .2s; font-family:inherit; }
-  .ftab:hover { border-color:var(--blue-dark); color:#fff; }
-  .ftab.active { background:var(--blue-dark); color:#fff; border-color:var(--blue-dark); }
-  select { background:var(--blue-card); border:1px solid var(--blue-border); color:var(--text); padding:9px 30px 9px 12px; border-radius:7px; font-family:inherit; font-size:13px; cursor:pointer; outline:none; transition:border-color .2s; appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%235C82A8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:left 8px center; }
-  select:hover,select:focus { border-color:var(--blue-dark); }
-
-  .results-bar { max-width:1200px; margin:16px auto 16px; padding:0 2rem; display:flex; align-items:center; justify-content:space-between; }
-  .results-count { font-size:14px; color:var(--text2); }
-  .results-count strong { color:#fff; font-weight:700; }
-  .sort-wrap { display:flex; align-items:center; gap:8px; }
-  .sort-label { font-size:12px; color:var(--text3); }
-  .sort-select { background:var(--blue-card); border:1px solid var(--blue-border); color:var(--text); padding:7px 28px 7px 10px; border-radius:7px; font-family:inherit; font-size:13px; cursor:pointer; outline:none; appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%235C82A8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:left 7px center; }
-
-  .grid { max-width:1200px; margin:0 auto; padding:0 2rem 80px; display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:20px; }
-
-  .card { background:var(--blue-card); border:1px solid var(--blue-border); border-radius:var(--radius); overflow:hidden; cursor:pointer; transition:all .25s; }
-  .card:hover { transform:translateY(-5px); box-shadow:var(--shadow); border-color:var(--blue-dark); }
-  .card-img-wrap { position:relative; overflow:hidden; }
-  .card-img-wrap img { width:100%; height:210px; object-fit:cover; display:block; transition:transform .4s; }
-  .card:hover .card-img-wrap img { transform:scale(1.04); }
-  .card-img-placeholder { width:100%; height:210px; background:linear-gradient(135deg,#0e2247,#162f5a); display:flex; align-items:center; justify-content:center; font-size:52px; }
-  .card-badge { position:absolute; top:10px; right:10px; padding:4px 10px; border-radius:5px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; }
-  .badge-sale { background:#0D6ECF; color:#fff; }
-  .badge-rent { background:#0e7a4a; color:#fff; }
-  .card-flag { position:absolute; bottom:10px; left:10px; font-size:13px; background:rgba(0,0,0,0.55); padding:3px 8px; border-radius:5px; color:#fff; font-weight:600; }
-  .card-body { padding:14px 16px 16px; }
-  .card-title { font-size:15px; font-weight:700; margin-bottom:5px; line-height:1.3; color:#fff; }
-  .card-location { font-size:12px; color:var(--text2); margin-bottom:10px; }
-  .card-price { font-size:20px; font-weight:800; color:var(--gold); margin-bottom:10px; }
-  .card-price .per { font-size:12px; color:var(--text3); font-weight:400; }
-  .card-meta { display:flex; gap:14px; flex-wrap:wrap; padding-top:10px; border-top:1px solid var(--blue-border); }
-  .card-meta-item { font-size:12px; color:var(--text2); }
-  .card-roi { position:absolute; top:10px; left:10px; background:rgba(46,204,113,0.9); color:#fff; padding:3px 8px; border-radius:5px; font-size:11px; font-weight:700; }
-
-  .empty-state { grid-column:1/-1; text-align:center; padding:80px 20px; }
-  .empty-state .icon { font-size:52px; margin-bottom:14px; }
-  .empty-state h3 { font-size:18px; color:var(--text2); margin-bottom:6px; }
-  .empty-state p { font-size:13px; color:var(--text3); }
-
-  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(5,15,35,0.92); backdrop-filter:blur(8px); z-index:200; overflow-y:auto; padding:32px 16px; }
-  .modal-overlay.open { display:flex; align-items:flex-start; justify-content:center; }
-  .modal { background:var(--blue-navy); border:1px solid var(--blue-border); border-radius:16px; max-width:680px; width:100%; overflow:hidden; animation:slideUp .3s cubic-bezier(.22,.68,0,1.2); }
-  @keyframes slideUp { from{transform:translateY(30px);opacity:0} to{transform:none;opacity:1} }
-  .modal-img img { width:100%; height:260px; object-fit:cover; display:block; }
-  .modal-img-placeholder { width:100%; height:260px; background:linear-gradient(135deg,#0e2247,#162f5a); display:flex; align-items:center; justify-content:center; font-size:64px; }
-  .modal-body { padding:24px; }
-  .modal-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px; }
-  .modal-badge { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; padding:3px 10px; border-radius:5px; margin-bottom:8px; display:inline-block; }
-  .modal-title { font-size:20px; font-weight:800; color:#fff; margin-bottom:5px; }
-  .modal-close { background:rgba(255,255,255,0.08); border:none; color:var(--text2); width:34px; height:34px; border-radius:7px; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .2s; }
-  .modal-close:hover { background:rgba(255,255,255,0.15); color:#fff; }
-  .modal-location { color:var(--text2); font-size:13px; margin-bottom:16px; }
-  .modal-price { font-size:26px; font-weight:800; color:var(--gold); margin-bottom:16px; }
-  .modal-specs { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:18px; }
-  .modal-spec { background:var(--blue-hover); padding:12px 10px; border-radius:8px; text-align:center; border:1px solid var(--blue-border); }
-  .modal-spec-val { font-size:16px; font-weight:800; color:#fff; }
-  .modal-spec-key { font-size:10px; color:var(--text3); margin-top:3px; }
-  .modal-desc { color:var(--text2); font-size:13px; line-height:1.75; margin-bottom:20px; padding:14px; background:var(--blue-hover); border-radius:8px; border:1px solid var(--blue-border); }
-  .modal-tags { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; }
-  .modal-tag { background:rgba(18,119,225,0.15); border:1px solid rgba(18,119,225,0.3); color:var(--text2); padding:3px 10px; border-radius:5px; font-size:11px; font-weight:600; }
-  .contact-form h3 { font-size:15px; font-weight:700; margin-bottom:14px; color:#fff; }
-  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
-  .form-input { background:var(--blue-hover); border:1px solid var(--blue-border); color:var(--text); padding:11px 13px; border-radius:7px; font-family:inherit; font-size:13px; outline:none; width:100%; transition:border-color .2s; direction:rtl; }
-  .form-input::placeholder { color:var(--text3); }
-  .form-input:focus { border-color:var(--blue-dark); }
-  textarea.form-input { resize:none; height:74px; }
-  .submit-btn { width:100%; background:var(--blue-dark); color:#fff; border:none; padding:13px; border-radius:8px; font-weight:700; font-size:14px; cursor:pointer; font-family:inherit; transition:all .2s; margin-top:4px; }
-  .submit-btn:hover { background:#1585f5; transform:translateY(-1px); }
-
-  .add-modal { background:var(--blue-navy); border:1px solid var(--blue-border); border-radius:16px; max-width:540px; width:100%; animation:slideUp .3s cubic-bezier(.22,.68,0,1.2); }
-  .add-modal-header { padding:22px 24px 0; display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
-  .add-modal-title { font-size:18px; font-weight:800; color:#fff; }
-  .add-modal-body { padding:0 24px 24px; }
-  .add-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  .full-width { grid-column:1/-1; }
-  .form-label { font-size:11px; color:var(--text3); margin-bottom:4px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; }
-
-  .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--blue-navy); border:1px solid var(--blue-dark); color:#fff; padding:11px 22px; border-radius:8px; font-size:13px; font-weight:600; z-index:999; opacity:0; transition:opacity .3s; pointer-events:none; white-space:nowrap; box-shadow:0 4px 20px rgba(0,0,0,0.4); }
-  .toast.show { opacity:1; }
-
-  @media(max-width:640px) {
-    .nav-links,.export-btn { display:none; }
-    .stats-bar { gap:1.5rem; }
-    .form-row,.add-form-grid { grid-template-columns:1fr; }
-    .modal-specs { grid-template-columns:1fr 1fr; }
-    .search-tabs { display:none; }
-  }
+  :root{--blue-dark:#1277E1;--blue-deep:#0A1F44;--blue-navy:#10294F;--blue-card:#0E2247;--blue-hover:#0C1E3D;--blue-border:#1A3A6B;--blue-light:#E8F0FE;--text:#FFFFFF;--text2:#9DB8D8;--text3:#5C82A8;--gold:#F5A623;--green:#2ECC71;--radius:10px;--shadow:0 8px 32px rgba(0,0,0,0.35);}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Heebo',sans-serif;background:var(--blue-deep);color:var(--text);min-height:100vh;direction:rtl;}
+  nav{position:sticky;top:0;z-index:100;background:rgba(10,31,68,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--blue-border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:62px;}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .logo-icon{width:36px;height:36px;background:var(--blue-dark);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:15px;}
+  .logo-text{font-size:21px;font-weight:800;color:#fff;}
+  .logo-text span{color:var(--gold);}
+  .nav-links{display:flex;gap:2rem;list-style:none;}
+  .nav-links a{color:var(--text2);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s;}
+  .nav-links a:hover{color:#fff;}
+  .nav-right{display:flex;gap:10px;align-items:center;}
+  .sheets-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(52,168,83,0.15);border:1px solid rgba(52,168,83,0.3);color:#4ade80;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;}
+  .export-btn{background:transparent;color:var(--text2);border:1px solid var(--blue-border);padding:7px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;}
+  .export-btn:hover{color:#fff;border-color:var(--blue-dark);}
+  .nav-btn{background:var(--blue-dark);color:#fff;border:none;padding:8px 20px;border-radius:7px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;transition:all .2s;}
+  .nav-btn:hover{background:#1585f5;transform:translateY(-1px);}
+  .hero{background:linear-gradient(160deg,#0A1F44 0%,#0D2252 50%,#0A1F44 100%);padding:70px 2rem 56px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(18,119,225,0.18) 0%,transparent 60%);pointer-events:none;}
+  .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(18,119,225,0.18);border:1px solid rgba(18,119,225,0.35);color:var(--text2);padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;margin-bottom:20px;}
+  .hero h1{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;line-height:1.2;margin-bottom:14px;color:#fff;}
+  .hero h1 em{color:var(--gold);font-style:normal;}
+  .hero p{color:var(--text2);font-size:1.05rem;margin-bottom:36px;}
+  .search-wrap{max-width:780px;margin:0 auto 28px;background:#fff;border-radius:14px;display:flex;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.3);}
+  .search-tabs{display:flex;border-left:1px solid #e2e8f0;flex-shrink:0;}
+  .search-tab{padding:0 18px;font-size:13px;font-weight:700;color:#64748b;cursor:pointer;border:none;background:transparent;font-family:inherit;transition:all .2s;border-bottom:2px solid transparent;white-space:nowrap;}
+  .search-tab.active{color:var(--blue-dark);border-bottom-color:var(--blue-dark);background:var(--blue-light);}
+  .search-input{flex:1;border:none;outline:none;color:#1a202c;font-size:15px;font-family:inherit;padding:14px 16px;direction:rtl;background:transparent;}
+  .search-input::placeholder{color:#94a3b8;}
+  .search-btn{background:var(--blue-dark);color:#fff;border:none;padding:14px 28px;font-weight:700;cursor:pointer;font-family:inherit;font-size:14px;white-space:nowrap;transition:background .2s;flex-shrink:0;display:flex;align-items:center;gap:6px;}
+  .search-btn:hover{background:#1585f5;}
+  .search-btn svg{width:16px;height:16px;}
+  .country-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+  .cpill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:var(--text2);padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
+  .cpill:hover{background:rgba(18,119,225,0.25);border-color:var(--blue-dark);color:#fff;}
+  .cpill.active{background:var(--blue-dark);border-color:var(--blue-dark);color:#fff;}
+  .loading-bar{background:rgba(52,168,83,0.12);border-bottom:1px solid rgba(52,168,83,0.25);padding:12px;text-align:center;color:#4ade80;font-size:13px;font-weight:600;display:none;}
+  .loading-bar.show{display:block;}
+  .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(74,222,128,0.3);border-top-color:#4ade80;border-radius:50%;animation:spin .8s linear infinite;margin-right:8px;vertical-align:middle;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .stats-bar{background:rgba(10,31,68,0.85);border-top:1px solid var(--blue-border);border-bottom:1px solid var(--blue-border);padding:16px 2rem;display:flex;justify-content:center;gap:4rem;}
+  .stat{text-align:center;}
+  .stat-num{font-size:1.35rem;font-weight:800;color:#fff;}
+  .stat-label{font-size:11px;color:var(--text3);margin-top:2px;font-weight:500;}
+  .filters-section{max-width:1200px;margin:24px auto 0;padding:0 2rem;}
+  .filters-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;}
+  .filter-group{display:flex;flex-direction:column;gap:4px;}
+  .filter-label{font-size:11px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.6px;}
+  .filter-tab-group{display:flex;gap:4px;flex-wrap:wrap;}
+  .ftab{padding:8px 15px;border-radius:7px;background:var(--blue-card);border:1px solid var(--blue-border);color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit;}
+  .ftab:hover{border-color:var(--blue-dark);color:#fff;}
+  .ftab.active{background:var(--blue-dark);color:#fff;border-color:var(--blue-dark);}
+  select{background:var(--blue-card);border:1px solid var(--blue-border);color:var(--text);padding:9px 30px 9px 12px;border-radius:7px;font-family:inherit;font-size:13px;cursor:pointer;outline:none;transition:border-color .2s;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%235C82A8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 8px center;}
+  select:hover,select:focus{border-color:var(--blue-dark);}
+  .results-bar{max-width:1200px;margin:16px auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;}
+  .results-count{font-size:14px;color:var(--text2);}
+  .results-count strong{color:#fff;font-weight:700;}
+  .sort-wrap{display:flex;align-items:center;gap:8px;}
+  .sort-label{font-size:12px;color:var(--text3);}
+  .sort-select{background:var(--blue-card);border:1px solid var(--blue-border);color:var(--text);padding:7px 28px 7px 10px;border-radius:7px;font-family:inherit;font-size:13px;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%235C82A8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 7px center;}
+  .grid{max-width:1200px;margin:0 auto;padding:0 2rem 80px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;}
+  .card{background:var(--blue-card);border:1px solid var(--blue-border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .25s;}
+  .card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--blue-dark);}
+  .card-img-wrap{position:relative;overflow:hidden;}
+  .card-img-wrap img{width:100%;height:210px;object-fit:cover;display:block;transition:transform .4s;}
+  .card:hover .card-img-wrap img{transform:scale(1.04);}
+  .card-img-placeholder{width:100%;height:210px;background:linear-gradient(135deg,#0e2247,#162f5a);display:flex;align-items:center;justify-content:center;font-size:52px;}
+  .card-badge{position:absolute;top:10px;right:10px;padding:4px 10px;border-radius:5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+  .badge-sale{background:#0D6ECF;color:#fff;}
+  .badge-rent{background:#0e7a4a;color:#fff;}
+  .card-roi{position:absolute;top:10px;left:10px;background:rgba(46,204,113,0.9);color:#fff;padding:3px 8px;border-radius:5px;font-size:11px;font-weight:700;}
+  .card-flag{position:absolute;bottom:10px;left:10px;font-size:13px;background:rgba(0,0,0,0.55);padding:3px 8px;border-radius:5px;color:#fff;font-weight:600;}
+  .card-sheets{position:absolute;bottom:10px;right:10px;background:rgba(52,168,83,0.85);color:#fff;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;}
+  .card-body{padding:14px 16px 16px;}
+  .card-title{font-size:15px;font-weight:700;margin-bottom:5px;line-height:1.3;color:#fff;}
+  .card-location{font-size:12px;color:var(--text2);margin-bottom:10px;}
+  .card-price{font-size:20px;font-weight:800;color:var(--gold);margin-bottom:10px;}
+  .card-price .per{font-size:12px;color:var(--text3);font-weight:400;}
+  .card-meta{display:flex;gap:14px;flex-wrap:wrap;padding-top:10px;border-top:1px solid var(--blue-border);}
+  .card-meta-item{font-size:12px;color:var(--text2);}
+  .empty-state{grid-column:1/-1;text-align:center;padding:80px 20px;}
+  .empty-state .icon{font-size:52px;margin-bottom:14px;}
+  .empty-state h3{font-size:18px;color:var(--text2);margin-bottom:6px;}
+  .empty-state p{font-size:13px;color:var(--text3);}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,15,35,0.92);backdrop-filter:blur(8px);z-index:200;overflow-y:auto;padding:32px 16px;}
+  .modal-overlay.open{display:flex;align-items:flex-start;justify-content:center;}
+  .modal{background:var(--blue-navy);border:1px solid var(--blue-border);border-radius:16px;max-width:680px;width:100%;overflow:hidden;animation:slideUp .3s cubic-bezier(.22,.68,0,1.2);}
+  @keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+  .modal-img img{width:100%;height:260px;object-fit:cover;display:block;}
+  .modal-img-placeholder{width:100%;height:260px;background:linear-gradient(135deg,#0e2247,#162f5a);display:flex;align-items:center;justify-content:center;font-size:64px;}
+  .modal-body{padding:24px;}
+  .modal-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .modal-badge{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 10px;border-radius:5px;margin-bottom:8px;display:inline-block;}
+  .modal-title{font-size:20px;font-weight:800;color:#fff;margin-bottom:5px;}
+  .modal-close{background:rgba(255,255,255,0.08);border:none;color:var(--text2);width:34px;height:34px;border-radius:7px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+  .modal-close:hover{background:rgba(255,255,255,0.15);color:#fff;}
+  .modal-location{color:var(--text2);font-size:13px;margin-bottom:16px;}
+  .modal-price{font-size:26px;font-weight:800;color:var(--gold);margin-bottom:16px;}
+  .modal-specs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;}
+  .modal-spec{background:var(--blue-hover);padding:12px 10px;border-radius:8px;text-align:center;border:1px solid var(--blue-border);}
+  .modal-spec-val{font-size:16px;font-weight:800;color:#fff;}
+  .modal-spec-key{font-size:10px;color:var(--text3);margin-top:3px;}
+  .modal-desc{color:var(--text2);font-size:13px;line-height:1.75;margin-bottom:20px;padding:14px;background:var(--blue-hover);border-radius:8px;border:1px solid var(--blue-border);}
+  .modal-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;}
+  .modal-tag{background:rgba(18,119,225,0.15);border:1px solid rgba(18,119,225,0.3);color:var(--text2);padding:3px 10px;border-radius:5px;font-size:11px;font-weight:600;}
+  .contact-form h3{font-size:15px;font-weight:700;margin-bottom:14px;color:#fff;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+  .form-input{background:var(--blue-hover);border:1px solid var(--blue-border);color:var(--text);padding:11px 13px;border-radius:7px;font-family:inherit;font-size:13px;outline:none;width:100%;transition:border-color .2s;direction:rtl;}
+  .form-input::placeholder{color:var(--text3);}
+  .form-input:focus{border-color:var(--blue-dark);}
+  textarea.form-input{resize:none;height:74px;}
+  .submit-btn{width:100%;background:var(--blue-dark);color:#fff;border:none;padding:13px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;transition:all .2s;margin-top:4px;}
+  .submit-btn:hover{background:#1585f5;transform:translateY(-1px);}
+  .add-modal{background:var(--blue-navy);border:1px solid var(--blue-border);border-radius:16px;max-width:540px;width:100%;animation:slideUp .3s cubic-bezier(.22,.68,0,1.2);}
+  .add-modal-header{padding:22px 24px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+  .add-modal-title{font-size:18px;font-weight:800;color:#fff;}
+  .add-modal-body{padding:0 24px 24px;}
+  .add-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .full-width{grid-column:1/-1;}
+  .form-label{font-size:11px;color:var(--text3);margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;}
+  .info-box{background:rgba(18,119,225,0.1);border:1px solid rgba(18,119,225,0.25);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:var(--text2);line-height:1.6;}
+  .info-box a{color:var(--blue-dark);font-weight:700;}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--blue-navy);border:1px solid var(--blue-dark);color:#fff;padding:11px 22px;border-radius:8px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.4);}
+  .toast.show{opacity:1;}
+  @media(max-width:640px){.nav-links,.export-btn{display:none;}.stats-bar{gap:1.5rem;}.form-row,.add-form-grid{grid-template-columns:1fr;}.modal-specs{grid-template-columns:1fr 1fr;}.search-tabs{display:none;}}
 </style>
 </head>
 <body>
@@ -175,12 +141,11 @@
     <span class="logo-text">Domi<span>Finder</span></span>
   </a>
   <ul class="nav-links">
-    <li><a href="#">נכסים</a></li>
-    <li><a href="#">מדינות</a></li>
-    <li><a href="#">מדריך למשקיע</a></li>
-    <li><a href="#">אודות</a></li>
+    <li><a href="#">נכסים</a></li><li><a href="#">מדינות</a></li>
+    <li><a href="#">מדריך למשקיע</a></li><li><a href="#">אודות</a></li>
   </ul>
   <div class="nav-right">
+    <span class="sheets-badge">📊 Google Sheets</span>
     <button class="export-btn" onclick="exportHTML()">⬇ ייצוא HTML</button>
     <button class="nav-btn" onclick="openAddModal()">+ פרסם נכס</button>
   </div>
@@ -198,8 +163,7 @@
     </div>
     <input class="search-input" type="text" id="search-input" placeholder="חיפוש לפי עיר, מדינה, כתובת..." oninput="applyFilters()">
     <button class="search-btn" onclick="applyFilters()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      חיפוש
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>חיפוש
     </button>
   </div>
   <div class="country-pills">
@@ -215,9 +179,11 @@
   </div>
 </section>
 
+<div id="loading-bar" class="loading-bar show"><span class="spinner"></span>מתחבר ל-Google Sheets ומטעין נכסים...</div>
+
 <div class="stats-bar">
-  <div class="stat"><div class="stat-num" id="stat-total">0</div><div class="stat-label">נכסים פעילים</div></div>
-  <div class="stat"><div class="stat-num" id="stat-countries">0</div><div class="stat-label">מדינות</div></div>
+  <div class="stat"><div class="stat-num" id="stat-total">—</div><div class="stat-label">נכסים פעילים</div></div>
+  <div class="stat"><div class="stat-num" id="stat-countries">—</div><div class="stat-label">מדינות</div></div>
   <div class="stat"><div class="stat-num">100%</div><div class="stat-label">מאומת ע"י DomiFinder</div></div>
   <div class="stat"><div class="stat-num">7/7</div><div class="stat-label">שירות שוטף</div></div>
 </div>
@@ -300,10 +266,14 @@
 <div class="modal-overlay" id="add-modal">
   <div class="add-modal">
     <div class="add-modal-header">
-      <div class="add-modal-title">+ פרסום נכס חדש</div>
+      <div class="add-modal-title">+ הוספת נכס לגיליון</div>
       <button class="modal-close" onclick="closeModal('add-modal')">✕</button>
     </div>
     <div class="add-modal-body">
+      <div class="info-box">
+        📊 <strong>כדי להוסיף נכס לאתר לצמיתות</strong> — הוסף שורה ישירות ל-<a href="https://docs.google.com/spreadsheets/d/1yppusf6TyYsm9gZG9EOhqQKlL300z3jQF59N_H1ZyfM" target="_blank">Google Sheets</a> ורענן את הדף.<br>
+        הטופס הזה מוסיף נכס זמני לסשן הנוכחי בלבד.
+      </div>
       <div class="add-form-grid">
         <div class="full-width"><div class="form-label">כותרת הנכס *</div><input class="form-input" type="text" id="add-title" placeholder="למשל: דירת 3 חדרים בתביליסי"></div>
         <div><div class="form-label">מדינה</div><select class="form-input" id="add-country"><option value="Georgia">🇬🇪 גאורגיה</option><option value="Thailand">🇹🇭 תאילנד</option><option value="Portugal">🇵🇹 פורטוגל</option><option value="Spain">🇪🇸 ספרד</option><option value="Dubai">🇦🇪 דובאי</option><option value="Greece">🇬🇷 יוון</option><option value="Cyprus">🇨🇾 קפריסין</option><option value="Romania">🇷🇴 רומניה</option><option value="Montenegro">🇲🇪 מונטנגרו</option></select></div>
@@ -317,7 +287,7 @@
         <div class="full-width"><div class="form-label">תיאור קצר</div><textarea class="form-input" id="add-desc" placeholder="תאר את הנכס..."></textarea></div>
         <div class="full-width"><div class="form-label">פרטי קשר</div><input class="form-input" type="text" id="add-contact" placeholder="טלפון / וואטסאפ"></div>
       </div>
-      <button class="submit-btn" style="margin-top:16px" onclick="addProperty()">פרסם נכס →</button>
+      <button class="submit-btn" style="margin-top:16px" onclick="addProperty()">הוסף נכס זמני →</button>
     </div>
   </div>
 </div>
@@ -327,111 +297,114 @@
 <script>
 const FLAGS={Georgia:'🇬🇪',Thailand:'🇹🇭',Portugal:'🇵🇹',Spain:'🇪🇸',Dubai:'🇦🇪',Greece:'🇬🇷',Cyprus:'🇨🇾',Romania:'🇷🇴',Montenegro:'🇲🇪'};
 const COUNTRY_HE={Georgia:'גאורגיה',Thailand:'תאילנד',Portugal:'פורטוגל',Spain:'ספרד',Dubai:'דובאי',Greece:'יוון',Cyprus:'קפריסין',Romania:'רומניה',Montenegro:'מונטנגרו'};
+const SHEET_ID='1yppusf6TyYsm9gZG9EOhqQKlL300z3jQF59N_H1ZyfM';
+const SHEET_CSV=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
 
-// 30 נכסים ריאליסטיים עם מחירים אמיתיים מהשוק
-const REAL_PROPERTIES = [
-  // ── גאורגיה ──
-  {id:101,title:'דירת 2 חדרות בשכונת ורקה, תביליסי',country:'Georgia',city:'Tbilisi',price:62000,deal:'sale',type:'דירה',rooms:2,size:65,floor:5,roi:8.5,img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80',desc:'דירה מחודשת בשכונת ורקה היוקרתית. פינישינג מודרני, נוף לפארק, בניין עם מעלית. מרחק הליכה לרכבת התחתית. תשואת שכירות 8-9% בשנה — אחת ההזדמנויות הטובות בשוק הגאורגי.',tags:['מחודש','השקעה','מרכז'],contact:'054-0000101',date:1710000000},
-  {id:102,title:'פנטהאוז עם טראסה בבאטומי, נוף לים',country:'Georgia',city:'Batumi',price:145000,deal:'sale',type:'פנטהאוז',rooms:3,size:120,floor:18,roi:7.2,img:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80',desc:'פנטהאוז יוקרתי בלב ריביירת הים השחור. נוף פנורמי לים מ-18 קומות, טראסה פרטית 40מ"ר, בריכה בבניין. עיר נופש מתפתחת — ביקוש גבוה לשכירות קצרת טווח.',tags:['נוף לים','יוקרה','Airbnb'],contact:'054-0000102',date:1709500000},
-  {id:103,title:'סטודיו להשקעה במרכז תביליסי',country:'Georgia',city:'Tbilisi',price:38000,deal:'sale',type:'סטודיו',rooms:1,size:35,floor:3,roi:9.1,img:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80',desc:'סטודיו קומפקטי במרכז העסקים של תביליסי. מתאים למגורים או להשכרה. תשואה גבוהה בשוק הגאורגי הצומח — כניסה קלה עם הון עצמי נמוך.',tags:['כניסה קלה','תשואה גבוהה','מרכז'],contact:'054-0000103',date:1709000000},
-  {id:104,title:'בית פרטי 4 חדרות בקוטאיסי',country:'Georgia',city:'Kutaisi',price:55000,deal:'sale',type:'בית פרטי',rooms:4,size:140,floor:1,roi:6.8,img:'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80',desc:'בית מרווח בעיר השנייה בגאורגיה, ליד נמל התעופה הבינלאומי. גינה פרטית, חניה כפולה. מחיר שוק נמוך מאוד ביחס לאיכות.',tags:['גינה','חניה','מחיר נמוך'],contact:'054-0000104',date:1708500000},
-
-  // ── תאילנד ──
-  {id:201,title:'קונדו יוקרה בפאטאיה, ראשון לים',country:'Thailand',city:'Pattaya',price:89000,deal:'sale',type:'דירה',rooms:2,size:68,floor:12,roi:7.5,img:'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80',desc:'קונדו מפואר 50 מטר מהחוף עם בריכה אינפיניטי. נוף לים, לובי יוקרתי, חדר כושר, אבטחה 24/7. מתאים להשקעה — ביקוש גבוה לשכירות תיירותית.',tags:['ראשון לים','בריכה','Airbnb'],contact:'054-0000201',date:1711500000},
-  {id:202,title:'וילה עם בריכה בקוסמוי',country:'Thailand',city:'Koh Samui',price:320000,deal:'sale',type:'בית פרטי',rooms:4,size:280,floor:1,roi:6.2,img:'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=600&q=80',desc:'וילה טרופית מדהימה בלב האי. בריכה פרטית, גינה עם עצי קוקוס, 4 חדרי שינה. מרחק 5 דקות מהחוף. הכנסה משכירות Airbnb: $3,000-5,000 לחודש.',tags:['וילה','בריכה','השקעה'],contact:'054-0000202',date:1711000000},
-  {id:203,title:'סטודיו בצ\'יאנג מאי להשכרה',country:'Thailand',city:'Chiang Mai',price:550,deal:'rent',type:'סטודיו',rooms:1,size:30,floor:4,roi:0,img:'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=600&q=80',desc:'סטודיו מודרני ומרוהט במחיר מצוין בעיר הצפון. כולל: WiFi מהיר, מזגן, כביסה. אידיאלי ל-Digital Nomads. מרחק הליכה לשוק הלילה המפורסם.',tags:['מרוהט','WiFi','Digital Nomad'],contact:'054-0000203',date:1710800000},
-  {id:204,title:'קונדו 3 חדרות בפוקט, Ocean View',country:'Thailand',city:'Phuket',price:175000,deal:'sale',type:'דירה',rooms:3,size:95,floor:8,roi:6.8,img:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=80',desc:'קונדו פרמיום עם נוף עוצר נשימה לאנדמן. פינישינג יוקרתי, מטבח מאובזר, 2 מרפסות. קומפלקס עם בריכות, ספא, מסעדה. החזר השקעה מהיר בשוק הפוקטי.',tags:['נוף לים','ספא','יוקרה'],contact:'054-0000204',date:1710600000},
-
-  // ── פורטוגל ──
-  {id:301,title:'דירת 3 חדרות בליסבון, שכונת אלפמה',country:'Portugal',city:'Lisbon',price:385000,deal:'sale',type:'דירה',rooms:3,size:110,floor:3,roi:4.5,img:'https://images.unsplash.com/photo-1548707309-dcebeab9ea9b?w=600&q=80',desc:'דירה מרהיבה בלב ליסבון ההיסטורית, שכונת אלפמה. גימורים מסורתיים עם אריחי אזולז\'ו, תקרות גבוהות, נוף לטאגוס. מתאים למגורים ולהשכרה תיירותית.',tags:['היסטורי','נוף לנהר','Golden Visa'],contact:'054-0000301',date:1712000000},
-  {id:302,title:'וילה עם בריכה באלגרבה',country:'Portugal',city:'Algarve',price:720000,deal:'sale',type:'בית פרטי',rooms:5,size:320,floor:1,roi:4.8,img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',desc:'וילה מפוארת בחוף הזהב של פורטוגל. 5 חדרי שינה, בריכה פרטית, גינה נופית. 10 דקות מהחוף. Golden Visa זכאי — גישה לכל אירופה.',tags:['Golden Visa','בריכה','Algarve'],contact:'054-0000302',date:1711800000},
-  {id:303,title:'בית אבן מסורתי בפורטו, מחודש 2023',country:'Portugal',city:'Porto',price:295000,deal:'sale',type:'בית פרטי',rooms:4,size:165,floor:2,roi:4.2,img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&q=80',desc:'בית פורטוגזי קלאסי בשכונת ריבייריניה — אתר מורשת עולמית. שיפוץ מלא 2023, שמר על הקסם המסורתי. חצר פרטית, גג עם נוף לנהר דואורו.',tags:['מחודש 2023','UNESCO','חצר'],contact:'054-0000303',date:1711600000},
-  {id:304,title:'אפרטמנט יוקרה בקסקאיש ליד הים',country:'Portugal',city:'Cascais',price:520000,deal:'sale',type:'דירה',rooms:3,size:130,floor:5,roi:3.8,img:'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=600&q=80',desc:'דירת יוקרה בעיירת הנופש המיוחסת של פורטוגל. 200 מטר מהים, קומה 5 עם מרפסת, חניה כפולה. שכונת יוקרה עם שגרירויות ואנשי עסקים בינלאומיים.',tags:['יוקרה','ליד הים','מבוקש'],contact:'054-0000304',date:1711400000},
-
-  // ── ספרד ──
-  {id:401,title:'דירת 2 חדרות בברצלונה, איקספמלה',country:'Spain',city:'Barcelona',price:340000,deal:'sale',type:'דירה',rooms:2,size:78,floor:4,roi:4.1,img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',desc:'דירה מודרנית בלב ברצלונה, רובע איקספמלה. מרחק הליכה לפסאיג דה גראסיה. אפשרות לרישיון השכרה קצרת טווח — ביקוש תיירותי גבוה מאוד.',tags:['מרכז','תיירות','פסיאג דה גראסיה'],contact:'054-0000401',date:1712200000},
-  {id:402,title:'וילה יוקרה במרבייה, Golden Mile',country:'Spain',city:'Marbella',price:1250000,deal:'sale',type:'בית פרטי',rooms:5,size:450,floor:1,roi:3.5,img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80',desc:'וילה יוקרה יוצאת דופן ב-Golden Mile של מרבייה. בריכה אינפיניטי, ספא, חדר קולנוע, 5 חדרי שינה סויטות. גישה לשירותי קונסיירז\'.',tags:['Ultra Luxury','Golden Mile','ספא'],contact:'054-0000402',date:1712000000},
-  {id:403,title:'סטודיו להשקעה בולנסיה',country:'Spain',city:'Valencia',price:118000,deal:'sale',type:'סטודיו',rooms:1,size:42,floor:2,roi:5.2,img:'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&q=80',desc:'סטודיו בעיר הצומחת של ספרד. ולנסיה — מחירים זולים מברצלונה/מדריד עם פוטנציאל עליית ערך גבוה. שכונה מתחדשת, קרוב לאוניברסיטה.',tags:['צמיחה','אוניברסיטה','פוטנציאל'],contact:'054-0000403',date:1711900000},
-  {id:404,title:'דירת 3 חדרות בקוסטה דל סול',country:'Spain',city:'Malaga',price:225000,deal:'sale',type:'דירה',rooms:3,size:95,floor:6,roi:5.8,img:'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=600&q=80',desc:'דירה עם נוף לים בחוף השמש. קומפלקס עם בריכה, טניס וחדר כושר. 15 דקות מנמל התעופה. ביקוש עונתי גבוה — השכרה עד €1,800/חודש.',tags:['נוף לים','קוסטה דל סול','עונתי'],contact:'054-0000404',date:1711700000},
-
-  // ── דובאי ──
-  {id:501,title:'דירת 1 חדר בדאון טאון דובאי, Burj View',country:'Dubai',city:'Dubai',price:285000,deal:'sale',type:'דירה',rooms:1,size:65,floor:28,roi:6.5,img:'https://images.unsplash.com/photo-1582407947304-fd86f28f7e27?w=600&q=80',desc:'דירת 1 חדר בבניין יוקרה עם נוף לבורג׳ חליפה. לובי 5 כוכבים, בריכה אינפיניטי, חדר כושר פרמיום. אין מס הכנסה בדובאי — תשואה נטו גבוהה במיוחד.',tags:['Burj View','ללא מס','יוקרה'],contact:'054-0000501',date:1712500000},
-  {id:502,title:'פנטהאוז ב-Palm Jumeirah',country:'Dubai',city:'Dubai',price:2800000,deal:'sale',type:'פנטהאוז',rooms:4,size:380,floor:22,roi:4.2,img:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80',desc:'פנטהאוז אולטרה-יוקרה בפאלם ג\'ומיירה. 4 חדרי שינה, טרס ענק, בריכה פרטית, נוף 360° לאטלנטיס ולסקיילין. שירותי קונסיירז\' 24/7.',tags:['Palm Jumeirah','Ultra Luxury','בריכה פרטית'],contact:'054-0000502',date:1712300000},
-  {id:503,title:'דירת 2 חדרות ב-Dubai Marina',country:'Dubai',city:'Dubai',price:420000,deal:'sale',type:'דירה',rooms:2,size:95,floor:15,roi:5.8,img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80',desc:'דירה מודרנית ב-Dubai Marina עם נוף לתעלה. מרחק הליכה למטרו, לחוף JBR ולמרכז קניות. בניין עם בריכה, חדר כושר ושמירה.',tags:['Marina View','ליד הים','מטרו'],contact:'054-0000503',date:1712100000},
-  {id:504,title:'סטודיו ב-Business Bay להשכרה',country:'Dubai',city:'Dubai',price:2200,deal:'rent',type:'סטודיו',rooms:1,size:45,floor:10,roi:0,img:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80',desc:'סטודיו מרוהט במלואו ב-Business Bay. כולל WiFi גיגה-ביט, מזגן, מטבח מאובזר, חניה. קרוב לבורג׳ חליפה ולמרכזי עסקים. חוזה גמיש.',tags:['מרוהט','Business Bay','גמיש'],contact:'054-0000504',date:1711900000},
-
-  // ── יוון ──
-  {id:601,title:'בית אבן עם נוף לאגאי, סנטוריני',country:'Greece',city:'Santorini',price:480000,deal:'sale',type:'בית פרטי',rooms:3,size:120,floor:1,roi:5.5,img:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=80',desc:'בית קייה איקוני עם נוף מדהים לקלדרה ולגרעין הוולקאני. בריכה קטנה, טראסה עם שקיעות אגדיות. השכרה Airbnb מוצלחת — €800-1,500/לילה בעונה.',tags:['קלדרה','Airbnb','שקיעות'],contact:'054-0000601',date:1712600000},
-  {id:602,title:'דירה 2 חדרות באתונה, קולונאקי',country:'Greece',city:'Athens',price:185000,deal:'sale',type:'דירה',rooms:2,size:80,floor:3,roi:4.8,img:'https://images.unsplash.com/photo-1555993539-1732b0258235?w=600&q=80',desc:'דירה מחודשת בשכונת קולונאקי היוקרתית — "הצ\'לסי של אתונה". מרחק הליכה לאקרופוליס. Golden Visa ב-250,000€ — אחת המדיניות הנמוכות באירופה.',tags:['Golden Visa','קולונאקי','מחודש'],contact:'054-0000602',date:1712400000},
-  {id:603,title:'וילה מסורתית בקרתה, כרתים',country:'Greece',city:'Crete',price:320000,deal:'sale',type:'בית פרטי',rooms:4,size:200,floor:1,roi:5.2,img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',desc:'וילה מסורתית כרתית עם חצר ענקית ועצי זית. 4 חדרי שינה, 3 חדרי שירותים, מטבח יווני מסורתי. ים 5 דקות נסיעה.',tags:['מסורתי','כרתים','חצר'],contact:'054-0000603',date:1712200000},
-
-  // ── קפריסין ──
-  {id:701,title:'דירת יוקרה בלימסול, Marine Tower',country:'Cyprus',city:'Limassol',price:395000,deal:'sale',type:'דירה',rooms:2,size:95,floor:14,roi:4.5,img:'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=600&q=80',desc:'דירה פרמיום בפרויקט Marine Tower המיוחל. נוף פנורמי לים התיכון, חניה כפולה, לובי מפואר. Limassol — מרכז הפיננסים של ים תיכון.',tags:['Marine Tower','נוף לים','לימסול'],contact:'054-0000701',date:1712700000},
-  {id:702,title:'וילה חדשה בפאפוס, 5 חדרות',country:'Cyprus',city:'Paphos',price:650000,deal:'sale',type:'בית פרטי',rooms:5,size:280,floor:1,roi:4.0,img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80',desc:'וילה brand new בעיר המורשת העולמית. 5 חדרי שינה, בריכה פרטית, גינה מעוצבת. אזרחות קפריסאית — גישה לכל EU. אחת ההזדמנויות הטובות.',tags:['חדש','EU Residency','בריכה'],contact:'054-0000702',date:1712500000},
-
-  // ── רומניה ──
-  {id:801,title:'דירת 3 חדרות בבוקרשט, הרבסטראו',country:'Romania',city:'Bucharest',price:145000,deal:'sale',type:'דירה',rooms:3,size:85,floor:4,roi:6.5,img:'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80',desc:'דירה יוקרתית בשכונת הרבסטראו — "הפארק" של בוקרשט. ליד אגם הרבסטראו, מסעדות גורמה, מרכז עסקים. בירת רומניה — כלכלה צומחת בתוך האיחוד האירופי.',tags:['EU','הרבסטראו','צמיחה'],contact:'054-0000801',date:1712300000},
-  {id:802,title:'סטודיו להשקעה בקלוז\'- נאפוקה',country:'Romania',city:'Cluj-Napoca',price:78000,deal:'sale',type:'סטודיו',rooms:1,size:38,floor:3,roi:7.8,img:'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=600&q=80',desc:'סטודיו בעיר הסטארטאפים של רומניה. ביקוש עצום מסטודנטים ועובדי טק. תשואה שנתית 7-8%. קלוז\' — עיר מועדפת על משקיעים אירופאים.',tags:['טק','סטודנטים','תשואה גבוהה'],contact:'054-0000802',date:1712100000},
-
-  // ── מונטנגרו ──
-  {id:901,title:'אפרטמנט ים בבודוה, Old Town View',country:'Montenegro',city:'Budva',price:165000,deal:'sale',type:'דירה',rooms:2,size:72,floor:5,roi:6.0,img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80',desc:'דירה עם נוף ל-Old Town האגדי של בודוה ולאדריאטי. 100 מטר מהחוף. מונטנגרו — מועמדת ל-EU 2025, מחירים עולים בעקביות.',tags:['Old Town','אדריאטי','EU Candidate'],contact:'054-0000901',date:1712400000},
-  {id:902,title:'וילה יוקרה בפורטו מונטנגרו',country:'Montenegro',city:'Tivat',price:890000,deal:'sale',type:'בית פרטי',rooms:4,size:320,floor:1,roi:4.5,img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',desc:'וילה ב-Porto Montenegro — המרינה היוקרתית שמתחרה בסן-טרופה. עגינת יאכטות, שירותי 5 כוכבים, מועדון ים. אורח חיים מפואר בלב הבלקן.',tags:['Porto Montenegro','יאכטות','יוקרה'],contact:'054-0000902',date:1712200000},
+const DEFAULTS=[
+  {id:101,title:'דירת 2 חדרות בשכונת ורקה, תביליסי',country:'Georgia',city:'Tbilisi',price:62000,deal:'sale',type:'דירה',rooms:2,size:65,floor:5,roi:8.5,img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80',desc:'דירה מחודשת בשכונת ורקה. פינישינג מודרני, נוף לפארק, תשואה 8-9%.',tags:['מחודש','השקעה','מרכז'],contact:'054-0000101',date:1710000000,source:'default'},
+  {id:102,title:'פנטהאוז עם טראסה בבאטומי, נוף לים',country:'Georgia',city:'Batumi',price:145000,deal:'sale',type:'פנטהאוז',rooms:3,size:120,floor:18,roi:7.2,img:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80',desc:'פנטהאוז יוקרתי בריביירת הים השחור. נוף פנורמי, טראסה 40מ"ר.',tags:['נוף לים','יוקרה','Airbnb'],contact:'054-0000102',date:1709500000,source:'default'},
+  {id:103,title:'סטודיו להשקעה במרכז תביליסי',country:'Georgia',city:'Tbilisi',price:38000,deal:'sale',type:'סטודיו',rooms:1,size:35,floor:3,roi:9.1,img:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80',desc:'סטודיו קומפקטי במרכז תביליסי. תשואה גבוהה בשוק הגאורגי.',tags:['כניסה קלה','תשואה גבוהה'],contact:'054-0000103',date:1709000000,source:'default'},
+  {id:104,title:'בית פרטי 4 חדרות בקוטאיסי',country:'Georgia',city:'Kutaisi',price:55000,deal:'sale',type:'בית פרטי',rooms:4,size:140,floor:1,roi:6.8,img:'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80',desc:'בית מרווח עם גינה וחניה כפולה.',tags:['גינה','חניה'],contact:'054-0000104',date:1708500000,source:'default'},
+  {id:201,title:'קונדו יוקרה בפאטאיה, ראשון לים',country:'Thailand',city:'Pattaya',price:89000,deal:'sale',type:'דירה',rooms:2,size:68,floor:12,roi:7.5,img:'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80',desc:'קונדו 50 מטר מהחוף עם בריכה אינפיניטי.',tags:['ראשון לים','בריכה','Airbnb'],contact:'054-0000201',date:1711500000,source:'default'},
+  {id:202,title:'וילה עם בריכה בקוסמוי',country:'Thailand',city:'Koh Samui',price:320000,deal:'sale',type:'בית פרטי',rooms:4,size:280,floor:1,roi:6.2,img:'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=600&q=80',desc:'וילה טרופית עם בריכה פרטית. Airbnb: $3,000-5,000/חודש.',tags:['וילה','בריכה','Airbnb'],contact:'054-0000202',date:1711000000,source:'default'},
+  {id:203,title:"סטודיו בצ'יאנג מאי להשכרה",country:'Thailand',city:'Chiang Mai',price:550,deal:'rent',type:'סטודיו',rooms:1,size:30,floor:4,roi:0,img:'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=600&q=80',desc:'סטודיו מרוהט עם WiFi מהיר. אידיאלי ל-Digital Nomads.',tags:['מרוהט','Digital Nomad'],contact:'054-0000203',date:1710800000,source:'default'},
+  {id:204,title:'קונדו 3 חדרות בפוקט, Ocean View',country:'Thailand',city:'Phuket',price:175000,deal:'sale',type:'דירה',rooms:3,size:95,floor:8,roi:6.8,img:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=80',desc:'קונדו פרמיום עם נוף לאנדמן. קומפלקס עם בריכות וספא.',tags:['נוף לים','ספא','יוקרה'],contact:'054-0000204',date:1710600000,source:'default'},
+  {id:301,title:'דירת 3 חדרות בליסבון, שכונת אלפמה',country:'Portugal',city:'Lisbon',price:385000,deal:'sale',type:'דירה',rooms:3,size:110,floor:3,roi:4.5,img:'https://images.unsplash.com/photo-1548707309-dcebeab9ea9b?w=600&q=80',desc:'דירה בלב ליסבון ההיסטורית. גימורים מסורתיים, נוף לטאגוס.',tags:['היסטורי','Golden Visa'],contact:'054-0000301',date:1712000000,source:'default'},
+  {id:302,title:'וילה עם בריכה באלגרבה',country:'Portugal',city:'Algarve',price:720000,deal:'sale',type:'בית פרטי',rooms:5,size:320,floor:1,roi:4.8,img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',desc:'וילה מפוארת בחוף הזהב. Golden Visa זכאי.',tags:['Golden Visa','בריכה'],contact:'054-0000302',date:1711800000,source:'default'},
+  {id:303,title:'בית אבן מסורתי בפורטו',country:'Portugal',city:'Porto',price:295000,deal:'sale',type:'בית פרטי',rooms:4,size:165,floor:2,roi:4.2,img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&q=80',desc:'בית פורטוגזי קלאסי. שיפוץ מלא 2023.',tags:['מחודש 2023','UNESCO'],contact:'054-0000303',date:1711600000,source:'default'},
+  {id:401,title:'דירת 2 חדרות בברצלונה, איקספמלה',country:'Spain',city:'Barcelona',price:340000,deal:'sale',type:'דירה',rooms:2,size:78,floor:4,roi:4.1,img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',desc:'דירה מודרנית בלב ברצלונה.',tags:['מרכז','תיירות'],contact:'054-0000401',date:1712200000,source:'default'},
+  {id:402,title:'וילה יוקרה במרבייה, Golden Mile',country:'Spain',city:'Marbella',price:1250000,deal:'sale',type:'בית פרטי',rooms:5,size:450,floor:1,roi:3.5,img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80',desc:'וילה יוקרה ב-Golden Mile. בריכה אינפיניטי, ספא.',tags:['Ultra Luxury','Golden Mile'],contact:'054-0000402',date:1712000000,source:'default'},
+  {id:403,title:'סטודיו להשקעה בולנסיה',country:'Spain',city:'Valencia',price:118000,deal:'sale',type:'סטודיו',rooms:1,size:42,floor:2,roi:5.2,img:'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&q=80',desc:'סטודיו בעיר הצומחת. פוטנציאל עליית ערך גבוה.',tags:['צמיחה','פוטנציאל'],contact:'054-0000403',date:1711900000,source:'default'},
+  {id:404,title:'דירת 3 חדרות בקוסטה דל סול',country:'Spain',city:'Malaga',price:225000,deal:'sale',type:'דירה',rooms:3,size:95,floor:6,roi:5.8,img:'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=600&q=80',desc:'דירה עם נוף לים. השכרה עד 1,800€/חודש.',tags:['נוף לים','קוסטה דל סול'],contact:'054-0000404',date:1711700000,source:'default'},
+  {id:501,title:'דירת 1 חדר בדאון טאון דובאי',country:'Dubai',city:'Dubai',price:285000,deal:'sale',type:'דירה',rooms:1,size:65,floor:28,roi:6.5,img:'https://images.unsplash.com/photo-1582407947304-fd86f28f7e27?w=600&q=80',desc:'נוף לבורג׳ חליפה. ללא מס הכנסה.',tags:['Burj View','ללא מס'],contact:'054-0000501',date:1712500000,source:'default'},
+  {id:502,title:'פנטהאוז ב-Palm Jumeirah',country:'Dubai',city:'Dubai',price:2800000,deal:'sale',type:'פנטהאוז',rooms:4,size:380,floor:22,roi:4.2,img:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80',desc:'פנטהאוז אולטרה-יוקרה. בריכה פרטית, נוף 360°.',tags:['Palm Jumeirah','Ultra Luxury'],contact:'054-0000502',date:1712300000,source:'default'},
+  {id:503,title:'דירת 2 חדרות ב-Dubai Marina',country:'Dubai',city:'Dubai',price:420000,deal:'sale',type:'דירה',rooms:2,size:95,floor:15,roi:5.8,img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80',desc:'נוף לתעלה. מרחק הליכה למטרו.',tags:['Marina View','מטרו'],contact:'054-0000503',date:1712100000,source:'default'},
+  {id:504,title:'סטודיו ב-Business Bay להשכרה',country:'Dubai',city:'Dubai',price:2200,deal:'rent',type:'סטודיו',rooms:1,size:45,floor:10,roi:0,img:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80',desc:'סטודיו מרוהט. חוזה גמיש.',tags:['מרוהט','גמיש'],contact:'054-0000504',date:1711900000,source:'default'},
+  {id:601,title:'בית אבן עם נוף לאגאי, סנטוריני',country:'Greece',city:'Santorini',price:480000,deal:'sale',type:'בית פרטי',rooms:3,size:120,floor:1,roi:5.5,img:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=80',desc:'בית עם נוף לקלדרה. Airbnb: 800-1,500€/לילה.',tags:['קלדרה','Airbnb'],contact:'054-0000601',date:1712600000,source:'default'},
+  {id:602,title:'דירה 2 חדרות באתונה, קולונאקי',country:'Greece',city:'Athens',price:185000,deal:'sale',type:'דירה',rooms:2,size:80,floor:3,roi:4.8,img:'https://images.unsplash.com/photo-1555993539-1732b0258235?w=600&q=80',desc:'דירה מחודשת בשכונה היוקרתית. Golden Visa ב-250,000€.',tags:['Golden Visa','קולונאקי'],contact:'054-0000602',date:1712400000,source:'default'},
+  {id:603,title:'וילה מסורתית בכרתים',country:'Greece',city:'Crete',price:320000,deal:'sale',type:'בית פרטי',rooms:4,size:200,floor:1,roi:5.2,img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',desc:'וילה כרתית עם חצר ועצי זית.',tags:['מסורתי','כרתים'],contact:'054-0000603',date:1712200000,source:'default'},
+  {id:701,title:'דירת יוקרה בלימסול, Marine Tower',country:'Cyprus',city:'Limassol',price:395000,deal:'sale',type:'דירה',rooms:2,size:95,floor:14,roi:4.5,img:'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=600&q=80',desc:'נוף פנורמי לים התיכון.',tags:['נוף לים','לימסול'],contact:'054-0000701',date:1712700000,source:'default'},
+  {id:702,title:'וילה חדשה בפאפוס, 5 חדרות',country:'Cyprus',city:'Paphos',price:650000,deal:'sale',type:'בית פרטי',rooms:5,size:280,floor:1,roi:4.0,img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80',desc:'וילה brand new. אזרחות EU.',tags:['EU Residency','חדש'],contact:'054-0000702',date:1712500000,source:'default'},
+  {id:801,title:'דירת 3 חדרות בבוקרשט, הרבסטראו',country:'Romania',city:'Bucharest',price:145000,deal:'sale',type:'דירה',rooms:3,size:85,floor:4,roi:6.5,img:'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80',desc:'כלכלה צומחת בתוך האיחוד האירופי.',tags:['EU','צמיחה'],contact:'054-0000801',date:1712300000,source:'default'},
+  {id:802,title:"סטודיו להשקעה בקלוז' נאפוקה",country:'Romania',city:'Cluj-Napoca',price:78000,deal:'sale',type:'סטודיו',rooms:1,size:38,floor:3,roi:7.8,img:'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=600&q=80',desc:'עיר הסטארטאפים. תשואה 7-8%.',tags:['טק','תשואה גבוהה'],contact:'054-0000802',date:1712100000,source:'default'},
+  {id:901,title:'אפרטמנט ים בבודוה, Old Town View',country:'Montenegro',city:'Budva',price:165000,deal:'sale',type:'דירה',rooms:2,size:72,floor:5,roi:6.0,img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80',desc:'נוף ל-Old Town. מונטנגרו מועמדת ל-EU.',tags:['Old Town','EU Candidate'],contact:'054-0000901',date:1712400000,source:'default'},
+  {id:902,title:'וילה יוקרה בפורטו מונטנגרו',country:'Montenegro',city:'Tivat',price:890000,deal:'sale',type:'בית פרטי',rooms:4,size:320,floor:1,roi:4.5,img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',desc:'Porto Montenegro — מרינה יוקרתית. עגינת יאכטות.',tags:['Porto Montenegro','יוקרה'],contact:'054-0000902',date:1712200000,source:'default'},
 ];
 
-let properties = [];
-let currentDeal = 'all';
-let currentType = '';
-let currentCountry = '';
+let properties=[...DEFAULTS];
+let currentDeal='all',currentType='',currentCountry='';
 
-function loadProperties() {
-  try {
-    const saved = localStorage.getItem('domifinder_v4');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      // מיזוג — נכסים שמורים + נכסים ריאליסטיים (ללא כפילויות)
-      const savedIds = new Set(parsed.map(p=>p.id));
-      const merged = [...parsed, ...REAL_PROPERTIES.filter(p=>!savedIds.has(p.id))];
-      properties = merged;
-    } else {
-      properties = [...REAL_PROPERTIES];
-      localStorage.setItem('domifinder_v4', JSON.stringify(properties));
+async function loadFromSheets(){
+  try{
+    const res=await fetch(SHEET_CSV);
+    if(!res.ok) throw new Error('failed');
+    const csv=await res.text();
+    const lines=csv.split('\n');
+    if(lines.length<2) throw new Error('empty');
+    const headers=lines[0].split(',').map(h=>h.trim().replace(/"/g,'').toLowerCase());
+    const parsed=[];
+    for(let i=1;i<lines.length;i++){
+      if(!lines[i].trim()) continue;
+      const cols=lines[i].split(',');
+      const obj={};
+      headers.forEach((h,idx)=>{ obj[h]=(cols[idx]||'').trim().replace(/"/g,''); });
+      if(!obj.title||!obj.country||!obj.price) continue;
+      parsed.push({
+        id:parseInt(obj.id)||Date.now()+i,
+        title:obj.title, country:obj.country, city:obj.city||'',
+        price:parseFloat(obj.price)||0, deal:obj.deal||'sale',
+        type:obj.type||'דירה', rooms:parseInt(obj.rooms)||1,
+        size:parseInt(obj.size)||0, floor:parseInt(obj.floor)||0,
+        roi:parseFloat(obj.roi)||0, img:obj.img||'', desc:obj.desc||'',
+        tags:obj.tags?obj.tags.split('|').map(t=>t.trim()).filter(Boolean):[],
+        contact:obj.contact||'', date:parseInt(obj.date)||Math.floor(Date.now()/1000),
+        source:'sheets'
+      });
     }
-  } catch(e) { properties = [...REAL_PROPERTIES]; }
+    if(parsed.length>0){
+      const ids=new Set(parsed.map(p=>p.id));
+      properties=[...parsed,...DEFAULTS.filter(p=>!ids.has(p.id))];
+      document.getElementById('loading-bar').innerHTML=`✅ נטענו ${parsed.length} נכסים מ-Google Sheets`;
+      setTimeout(()=>document.getElementById('loading-bar').classList.remove('show'),3000);
+      showToast(`📊 ${parsed.length} נכסים נטענו מ-Sheets!`);
+    } else {
+      document.getElementById('loading-bar').innerHTML='📋 גיליון ריק — מציג נכסי דוגמה';
+      setTimeout(()=>document.getElementById('loading-bar').classList.remove('show'),3000);
+    }
+  } catch(e){
+    document.getElementById('loading-bar').innerHTML='ℹ️ גיליון ריק — מציג 30 נכסי דוגמה';
+    setTimeout(()=>document.getElementById('loading-bar').classList.remove('show'),3000);
+  }
+  updateStats(); applyFilters();
 }
 
-function saveProperties() { localStorage.setItem('domifinder_v4', JSON.stringify(properties)); }
-
-function updateStats() {
-  document.getElementById('stat-total').textContent = properties.length;
-  document.getElementById('stat-countries').textContent = new Set(properties.map(p=>p.country)).size;
+function updateStats(){
+  document.getElementById('stat-total').textContent=properties.length;
+  document.getElementById('stat-countries').textContent=new Set(properties.map(p=>p.country)).size;
 }
 
-function imgHtml(p, h, large) {
-  if (p.img && p.img.startsWith('http')) {
-    const cls = large ? 'modal-img-placeholder' : 'card-img-placeholder';
+function imgHtml(p,h,large){
+  if(p.img&&p.img.startsWith('http')){
+    const cls=large?'modal-img-placeholder':'card-img-placeholder';
     return `<img src="${p.img}" alt="${p.title}" style="width:100%;height:${h}px;object-fit:cover;display:block" onerror="this.outerHTML='<div class=\\'${cls}\\' style=\\'height:${h}px\\'>${FLAGS[p.country]||'🏠'}</div>'">`;
   }
   return `<div class="${large?'modal-img-placeholder':'card-img-placeholder'}" style="height:${h}px">${FLAGS[p.country]||'🏠'}</div>`;
 }
 
-function fmtPrice(p) {
-  return '$' + parseInt(p.price).toLocaleString('he-IL') + (p.deal==='rent'?'<span class="per"> / חודש</span>':'');
-}
+function fmtPrice(p){return '$'+parseInt(p.price).toLocaleString('he-IL')+(p.deal==='rent'?'<span class="per"> / חודש</span>':'');}
 
-function renderGrid(list) {
-  document.getElementById('shown-count').textContent = list.length;
-  const grid = document.getElementById('grid');
-  if (!list.length) {
-    grid.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><h3>לא נמצאו נכסים</h3><p>נסו לשנות את הפילטרים או מילות החיפוש</p></div>`;
-    return;
-  }
-  grid.innerHTML = list.map(p=>`
+function renderGrid(list){
+  document.getElementById('shown-count').textContent=list.length;
+  const grid=document.getElementById('grid');
+  if(!list.length){grid.innerHTML=`<div class="empty-state"><div class="icon">🔍</div><h3>לא נמצאו נכסים</h3><p>נסו לשנות פילטרים</p></div>`;return;}
+  grid.innerHTML=list.map(p=>`
     <div class="card" onclick="openProperty(${p.id})">
       <div class="card-img-wrap">
         ${imgHtml(p,210,false)}
         <span class="card-badge ${p.deal==='sale'?'badge-sale':'badge-rent'}">${p.deal==='sale'?'למכירה':'להשכרה'}</span>
         ${p.roi>0?`<span class="card-roi">תשואה ${p.roi}%</span>`:''}
         <span class="card-flag">${FLAGS[p.country]||'🏠'} ${p.city}</span>
+        ${p.source==='sheets'?'<span class="card-sheets">📊 Sheets</span>':''}
       </div>
       <div class="card-body">
         <div class="card-title">${p.title}</div>
@@ -447,129 +420,77 @@ function renderGrid(list) {
     </div>`).join('');
 }
 
-function applyFilters() {
-  const q = document.getElementById('search-input').value.trim().toLowerCase();
-  const priceF = parseInt(document.getElementById('price-filter').value)||Infinity;
-  const sort = document.getElementById('sort-select').value;
-
-  let list = properties.filter(p=>{
-    if (currentDeal!=='all' && p.deal!==currentDeal) return false;
-    if (currentType && p.type!==currentType) return false;
-    if (currentCountry && p.country!==currentCountry) return false;
-    if (p.price>priceF) return false;
-    if (q) {
-      const hay = `${p.title} ${p.city} ${p.country} ${COUNTRY_HE[p.country]||''} ${p.type} ${p.desc||''} ${(p.tags||[]).join(' ')}`.toLowerCase();
-      if (!hay.includes(q)) return false;
-    }
+function applyFilters(){
+  const q=document.getElementById('search-input').value.trim().toLowerCase();
+  const priceF=parseInt(document.getElementById('price-filter').value)||Infinity;
+  const sort=document.getElementById('sort-select').value;
+  let list=properties.filter(p=>{
+    if(currentDeal!=='all'&&p.deal!==currentDeal) return false;
+    if(currentType&&p.type!==currentType) return false;
+    if(currentCountry&&p.country!==currentCountry) return false;
+    if(p.price>priceF) return false;
+    if(q){const hay=`${p.title} ${p.city} ${p.country} ${COUNTRY_HE[p.country]||''} ${p.type} ${p.desc||''} ${(p.tags||[]).join(' ')}`.toLowerCase();if(!hay.includes(q)) return false;}
     return true;
   });
-
   list.sort((a,b)=>{
-    if (sort==='price-asc') return a.price-b.price;
-    if (sort==='price-desc') return b.price-a.price;
-    if (sort==='size-desc') return b.size-a.size;
-    if (sort==='roi-desc') return (b.roi||0)-(a.roi||0);
+    if(sort==='price-asc') return a.price-b.price;
+    if(sort==='price-desc') return b.price-a.price;
+    if(sort==='size-desc') return b.size-a.size;
+    if(sort==='roi-desc') return (b.roi||0)-(a.roi||0);
     return b.date-a.date;
   });
   renderGrid(list);
 }
 
-function setSearchTab(btn, deal) {
-  currentDeal = deal;
-  document.querySelectorAll('.search-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  applyFilters();
-}
-function setTypeFTab(btn, type) {
-  currentType = type;
-  document.querySelectorAll('#type-tabs .ftab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  applyFilters();
-}
-function filterCountry(pill, country) {
-  if (currentCountry===country) { currentCountry=''; document.querySelectorAll('.cpill').forEach(p=>p.classList.remove('active')); }
-  else { currentCountry=country; document.querySelectorAll('.cpill').forEach(p=>p.classList.remove('active')); pill.classList.add('active'); }
+function setSearchTab(btn,deal){currentDeal=deal;document.querySelectorAll('.search-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyFilters();}
+function setTypeFTab(btn,type){currentType=type;document.querySelectorAll('#type-tabs .ftab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyFilters();}
+function filterCountry(pill,country){
+  if(currentCountry===country){currentCountry='';document.querySelectorAll('.cpill').forEach(p=>p.classList.remove('active'));}
+  else{currentCountry=country;document.querySelectorAll('.cpill').forEach(p=>p.classList.remove('active'));pill.classList.add('active');}
   applyFilters();
 }
 
-function openProperty(id) {
-  const p = properties.find(x=>x.id===id);
-  if (!p) return;
-  document.getElementById('modal-img-wrap').innerHTML = imgHtml(p,260,true);
-  const badge = document.getElementById('modal-badge');
-  badge.textContent = p.deal==='sale'?'למכירה':'להשכרה';
-  badge.style.cssText = p.deal==='sale'?'background:#0D6ECF;color:#fff':'background:#0e7a4a;color:#fff';
-  document.getElementById('modal-title').textContent = p.title;
-  document.getElementById('modal-location').textContent = `📍 ${p.city}, ${COUNTRY_HE[p.country]||p.country}  ${FLAGS[p.country]||''}`;
-  document.getElementById('modal-price').innerHTML = fmtPrice(p);
-  document.getElementById('modal-specs').innerHTML = `
+function openProperty(id){
+  const p=properties.find(x=>x.id===id);if(!p) return;
+  document.getElementById('modal-img-wrap').innerHTML=imgHtml(p,260,true);
+  const badge=document.getElementById('modal-badge');
+  badge.textContent=p.deal==='sale'?'למכירה':'להשכרה';
+  badge.style.cssText=p.deal==='sale'?'background:#0D6ECF;color:#fff':'background:#0e7a4a;color:#fff';
+  document.getElementById('modal-title').textContent=p.title;
+  document.getElementById('modal-location').textContent=`📍 ${p.city}, ${COUNTRY_HE[p.country]||p.country}  ${FLAGS[p.country]||''}`;
+  document.getElementById('modal-price').innerHTML=fmtPrice(p);
+  document.getElementById('modal-specs').innerHTML=`
     <div class="modal-spec"><div class="modal-spec-val">${p.rooms}</div><div class="modal-spec-key">חדרים</div></div>
     <div class="modal-spec"><div class="modal-spec-val">${p.size}</div><div class="modal-spec-key">מ"ר</div></div>
     <div class="modal-spec"><div class="modal-spec-val">${p.floor||'—'}</div><div class="modal-spec-key">קומה</div></div>
     <div class="modal-spec"><div class="modal-spec-val" style="color:${p.roi>0?'#2ECC71':'var(--text2)'}">${p.roi>0?p.roi+'%':'—'}</div><div class="modal-spec-key">תשואה</div></div>`;
-  document.getElementById('modal-tags').innerHTML = (p.tags||[]).map(t=>`<span class="modal-tag">${t}</span>`).join('');
-  document.getElementById('modal-desc').textContent = p.desc||'';
+  document.getElementById('modal-tags').innerHTML=(p.tags||[]).map(t=>`<span class="modal-tag">${t}</span>`).join('');
+  document.getElementById('modal-desc').textContent=p.desc||'';
   document.getElementById('prop-modal').classList.add('open');
 }
 
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
-function submitContact() {
-  const n = document.getElementById('cf-name').value.trim();
-  const ph = document.getElementById('cf-phone').value.trim();
-  if (!n||!ph) { showToast('⚠️ נא למלא שם וטלפון'); return; }
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function submitContact(){
+  const n=document.getElementById('cf-name').value.trim(),ph=document.getElementById('cf-phone').value.trim();
+  if(!n||!ph){showToast('⚠️ נא למלא שם וטלפון');return;}
   showToast('✅ הפנייה נשלחה! נחזור אליכם בקרוב');
   ['cf-name','cf-phone','cf-msg'].forEach(id=>document.getElementById(id).value='');
   closeModal('prop-modal');
 }
-
-function openAddModal() { document.getElementById('add-modal').classList.add('open'); }
-
-function addProperty() {
-  const title=document.getElementById('add-title').value.trim();
-  const city=document.getElementById('add-city').value.trim();
-  const price=parseInt(document.getElementById('add-price').value);
-  if (!title||!city||!price) { showToast('⚠️ נא למלא כותרת, עיר ומחיר'); return; }
-  const p = {
-    id:Date.now(), title, city, price, roi:0, tags:[],
-    country:document.getElementById('add-country').value,
-    deal:document.getElementById('add-deal').value,
-    type:document.getElementById('add-type').value,
-    rooms:parseInt(document.getElementById('add-rooms').value)||1,
-    size:parseInt(document.getElementById('add-size').value)||0,
-    floor:0,
-    img:document.getElementById('add-img').value.trim(),
-    desc:document.getElementById('add-desc').value.trim(),
-    contact:document.getElementById('add-contact').value.trim(),
-    date:Math.floor(Date.now()/1000)
-  };
-  properties.unshift(p);
-  saveProperties(); updateStats(); applyFilters();
-  closeModal('add-modal');
-  showToast('🎉 הנכס פורסם בהצלחה!');
+function openAddModal(){document.getElementById('add-modal').classList.add('open');}
+function addProperty(){
+  const title=document.getElementById('add-title').value.trim(),city=document.getElementById('add-city').value.trim(),price=parseInt(document.getElementById('add-price').value);
+  if(!title||!city||!price){showToast('⚠️ נא למלא כותרת, עיר ומחיר');return;}
+  const p={id:Date.now(),title,city,price,roi:0,tags:[],source:'manual',country:document.getElementById('add-country').value,deal:document.getElementById('add-deal').value,type:document.getElementById('add-type').value,rooms:parseInt(document.getElementById('add-rooms').value)||1,size:parseInt(document.getElementById('add-size').value)||0,floor:0,img:document.getElementById('add-img').value.trim(),desc:document.getElementById('add-desc').value.trim(),contact:document.getElementById('add-contact').value.trim(),date:Math.floor(Date.now()/1000)};
+  properties.unshift(p);updateStats();applyFilters();closeModal('add-modal');
+  showToast('🎉 נכס נוסף! להוספה קבועה — הוסף לגיליון Sheets');
   ['add-title','add-city','add-price','add-rooms','add-size','add-img','add-desc','add-contact'].forEach(id=>document.getElementById(id).value='');
 }
+function exportHTML(){const blob=new Blob([document.documentElement.outerHTML],{type:'text/html'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='domifinder.html';a.click();showToast('⬇ הקובץ מיוצא...');}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
+document.querySelectorAll('.modal-overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');});});
 
-function exportHTML() {
-  const blob = new Blob([document.documentElement.outerHTML], {type:'text/html'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'domifinder.html';
-  a.click();
-  showToast('⬇ הקובץ מיוצא...');
-}
-
-function showToast(msg) {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3000);
-}
-
-document.querySelectorAll('.modal-overlay').forEach(el=>{
-  el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('open'); });
-});
-
-loadProperties(); updateStats(); applyFilters();
+updateStats();applyFilters();loadFromSheets();
 </script>
 </body>
 </html>

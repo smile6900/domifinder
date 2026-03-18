@@ -434,34 +434,42 @@ const DEFAULTS=[
 ];
 let properties=[...DEFAULTS],currentDeal="all",currentType="",currentCountry="";
 
-async function loadFromSheets(){
+function loadFromSheets(){
   const lb=document.getElementById("loading-bar");
-  try{
-    const res=await fetch(APPS_SCRIPT_URL);
-    if(!res.ok) throw new Error("failed");
-    const json=await res.json();
-    if(!Array.isArray(json)||json.length===0) throw new Error("empty");
-    const parsed=json.map((row,i)=>({
-      id:parseInt(row.id)||Date.now()+i,title:String(row.title||""),country:String(row.country||""),
-      city:String(row.city||""),price:parseFloat(row.price)||0,deal:String(row.deal||"sale"),
-      type:String(row.type||"דירה"),rooms:parseInt(row.rooms)||1,size:parseInt(row.size)||0,
-      floor:parseInt(row.floor)||0,roi:parseFloat(row.roi)||0,img:String(row.img||""),
-      desc:String(row.desc||""),tags:row.tags?String(row.tags).split("|").map(t=>t.trim()).filter(Boolean):[],
-      contact:String(row.contact||""),date:parseInt(row.date)||Math.floor(Date.now()/1000),source:"sheets"
-    })).filter(p=>p.title&&p.country&&p.price>0);
-    if(parsed.length>0){
-      const ids=new Set(parsed.map(p=>p.id));
-      properties=[...parsed,...DEFAULTS.filter(p=>!ids.has(p.id))];
-      lb.innerHTML="✅ נטענו "+parsed.length+" נכסים מ-Google Sheets";
+  window._sheetsCallback=function(json){
+    try{
+      if(!Array.isArray(json)||json.length===0) throw new Error("empty");
+      const parsed=json.map((row,i)=>({
+        id:parseInt(row.id)||Date.now()+i,title:String(row.title||""),country:String(row.country||""),
+        city:String(row.city||""),price:parseFloat(row.price)||0,deal:String(row.deal||"sale"),
+        type:String(row.type||"דירה"),rooms:parseInt(row.rooms)||1,size:parseInt(row.size)||0,
+        floor:parseInt(row.floor)||0,roi:parseFloat(row.roi)||0,img:String(row.img||""),
+        desc:String(row.desc||""),tags:row.tags?String(row.tags).split("|").map(t=>t.trim()).filter(Boolean):[],
+        contact:String(row.contact||""),date:parseInt(row.date)||Math.floor(Date.now()/1000),source:"sheets"
+      })).filter(p=>p.title&&p.country&&p.price>0);
+      if(parsed.length>0){
+        const ids=new Set(parsed.map(p=>p.id));
+        properties=[...parsed,...DEFAULTS.filter(p=>!ids.has(p.id))];
+        lb.innerHTML="✅ נטענו "+parsed.length+" נכסים מ-Google Sheets";
+        setTimeout(()=>lb.classList.remove("show"),3000);
+        showToast("📊 "+parsed.length+" נכסים נטענו!");
+      } else throw new Error("no valid");
+    }catch(e){
+      properties=[...DEFAULTS];
+      lb.innerHTML="ℹ️ מציג נכסי דוגמה";
       setTimeout(()=>lb.classList.remove("show"),3000);
-      showToast("📊 "+parsed.length+" נכסים נטענו!");
-    } else throw new Error("no valid");
-  }catch(e){
+    }
+    updateStats();applyFilters();
+  };
+  const script=document.createElement("script");
+  script.src=APPS_SCRIPT_URL+"?callback=_sheetsCallback&t="+Date.now();
+  script.onerror=function(){
     properties=[...DEFAULTS];
     lb.innerHTML="ℹ️ מציג נכסי דוגמה";
     setTimeout(()=>lb.classList.remove("show"),3000);
-  }
-  updateStats();applyFilters();
+    updateStats();applyFilters();
+  };
+  document.head.appendChild(script);
 }
 
 function updateStats(){document.getElementById("stat-total").textContent=properties.length;document.getElementById("stat-countries").textContent=new Set(properties.map(p=>p.country)).size;}

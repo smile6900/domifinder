@@ -127,7 +127,7 @@
   .full-width{grid-column:1/-1;}
   .form-label{font-size:11px;color:var(--text3);margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;}
   .info-box{background:rgba(18,119,225,0.1);border:1px solid rgba(18,119,225,0.25);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:var(--text2);line-height:1.6;}
-  .info-box a{color:var(--blue-dark);font-weight:700;}
+  .info-box a{color:#60a5fa;font-weight:700;}
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--blue-navy);border:1px solid var(--blue-dark);color:#fff;padding:11px 22px;border-radius:8px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.4);}
   .toast.show{opacity:1;}
   @media(max-width:640px){.nav-links,.export-btn{display:none;}.stats-bar{gap:1.5rem;}.form-row,.add-form-grid{grid-template-columns:1fr;}.modal-specs{grid-template-columns:1fr 1fr;}.search-tabs{display:none;}}
@@ -141,8 +141,10 @@
     <span class="logo-text">Domi<span>Finder</span></span>
   </a>
   <ul class="nav-links">
-    <li><a href="#">נכסים</a></li><li><a href="#">מדינות</a></li>
-    <li><a href="#">מדריך למשקיע</a></li><li><a href="#">אודות</a></li>
+    <li><a href="#">נכסים</a></li>
+    <li><a href="#">מדינות</a></li>
+    <li><a href="#">מדריך למשקיע</a></li>
+    <li><a href="#">אודות</a></li>
   </ul>
   <div class="nav-right">
     <span class="sheets-badge">📊 Google Sheets</span>
@@ -179,7 +181,7 @@
   </div>
 </section>
 
-<div id="loading-bar" class="loading-bar show"><span class="spinner"></span>מתחבר ל-Google Sheets ומטעין נכסים...</div>
+<div id="loading-bar" class="loading-bar show"><span class="spinner"></span>מתחבר ל-Google Sheets...</div>
 
 <div class="stats-bar">
   <div class="stat"><div class="stat-num" id="stat-total">—</div><div class="stat-label">נכסים פעילים</div></div>
@@ -266,13 +268,12 @@
 <div class="modal-overlay" id="add-modal">
   <div class="add-modal">
     <div class="add-modal-header">
-      <div class="add-modal-title">+ הוספת נכס לגיליון</div>
+      <div class="add-modal-title">+ פרסום נכס חדש</div>
       <button class="modal-close" onclick="closeModal('add-modal')">✕</button>
     </div>
     <div class="add-modal-body">
       <div class="info-box">
-        📊 <strong>כדי להוסיף נכס לאתר לצמיתות</strong> — הוסף שורה ישירות ל-<a href="https://docs.google.com/spreadsheets/d/1yppusf6TyYsm9gZG9EOhqQKlL300z3jQF59N_H1ZyfM" target="_blank">Google Sheets</a> ורענן את הדף.<br>
-        הטופס הזה מוסיף נכס זמני לסשן הנוכחי בלבד.
+        📊 להוספת נכס קבועה — פתח את <a href="https://docs.google.com/spreadsheets/d/1yppusf6TyYsm9gZG9EOhqQKlL300z3jQF59N_H1ZyfM" target="_blank">Google Sheets</a> והוסף שורה חדשה.
       </div>
       <div class="add-form-grid">
         <div class="full-width"><div class="form-label">כותרת הנכס *</div><input class="form-input" type="text" id="add-title" placeholder="למשל: דירת 3 חדרים בתביליסי"></div>
@@ -297,85 +298,77 @@
 <script>
 const FLAGS={Georgia:'🇬🇪',Thailand:'🇹🇭',Portugal:'🇵🇹',Spain:'🇪🇸',Dubai:'🇦🇪',Greece:'🇬🇷',Cyprus:'🇨🇾',Romania:'🇷🇴',Montenegro:'🇲🇪'};
 const COUNTRY_HE={Georgia:'גאורגיה',Thailand:'תאילנד',Portugal:'פורטוגל',Spain:'ספרד',Dubai:'דובאי',Greece:'יוון',Cyprus:'קפריסין',Romania:'רומניה',Montenegro:'מונטנגרו'};
-const SHEET_ID='1yppusf6TyYsm9gZG9EOhqQKlL300z3jQF59N_H1ZyfM';
-const SHEET_CSV=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
+
+// ── Apps Script JSON API ──
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyWM8njlm4_L4hmVwi5g2-Rs-k4xUHM6NHoQW3uey8cviyf8FFBHrwTg0FM0KWgoQcGwg/exec';
 
 const DEFAULTS=[
   {id:101,title:'דירת 2 חדרות בשכונת ורקה, תביליסי',country:'Georgia',city:'Tbilisi',price:62000,deal:'sale',type:'דירה',rooms:2,size:65,floor:5,roi:8.5,img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80',desc:'דירה מחודשת בשכונת ורקה. פינישינג מודרני, נוף לפארק, תשואה 8-9%.',tags:['מחודש','השקעה','מרכז'],contact:'054-0000101',date:1710000000,source:'default'},
   {id:102,title:'פנטהאוז עם טראסה בבאטומי, נוף לים',country:'Georgia',city:'Batumi',price:145000,deal:'sale',type:'פנטהאוז',rooms:3,size:120,floor:18,roi:7.2,img:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80',desc:'פנטהאוז יוקרתי בריביירת הים השחור. נוף פנורמי, טראסה 40מ"ר.',tags:['נוף לים','יוקרה','Airbnb'],contact:'054-0000102',date:1709500000,source:'default'},
   {id:103,title:'סטודיו להשקעה במרכז תביליסי',country:'Georgia',city:'Tbilisi',price:38000,deal:'sale',type:'סטודיו',rooms:1,size:35,floor:3,roi:9.1,img:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80',desc:'סטודיו קומפקטי במרכז תביליסי. תשואה גבוהה בשוק הגאורגי.',tags:['כניסה קלה','תשואה גבוהה'],contact:'054-0000103',date:1709000000,source:'default'},
-  {id:104,title:'בית פרטי 4 חדרות בקוטאיסי',country:'Georgia',city:'Kutaisi',price:55000,deal:'sale',type:'בית פרטי',rooms:4,size:140,floor:1,roi:6.8,img:'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80',desc:'בית מרווח עם גינה וחניה כפולה.',tags:['גינה','חניה'],contact:'054-0000104',date:1708500000,source:'default'},
   {id:201,title:'קונדו יוקרה בפאטאיה, ראשון לים',country:'Thailand',city:'Pattaya',price:89000,deal:'sale',type:'דירה',rooms:2,size:68,floor:12,roi:7.5,img:'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80',desc:'קונדו 50 מטר מהחוף עם בריכה אינפיניטי.',tags:['ראשון לים','בריכה','Airbnb'],contact:'054-0000201',date:1711500000,source:'default'},
-  {id:202,title:'וילה עם בריכה בקוסמוי',country:'Thailand',city:'Koh Samui',price:320000,deal:'sale',type:'בית פרטי',rooms:4,size:280,floor:1,roi:6.2,img:'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=600&q=80',desc:'וילה טרופית עם בריכה פרטית. Airbnb: $3,000-5,000/חודש.',tags:['וילה','בריכה','Airbnb'],contact:'054-0000202',date:1711000000,source:'default'},
-  {id:203,title:"סטודיו בצ'יאנג מאי להשכרה",country:'Thailand',city:'Chiang Mai',price:550,deal:'rent',type:'סטודיו',rooms:1,size:30,floor:4,roi:0,img:'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=600&q=80',desc:'סטודיו מרוהט עם WiFi מהיר. אידיאלי ל-Digital Nomads.',tags:['מרוהט','Digital Nomad'],contact:'054-0000203',date:1710800000,source:'default'},
-  {id:204,title:'קונדו 3 חדרות בפוקט, Ocean View',country:'Thailand',city:'Phuket',price:175000,deal:'sale',type:'דירה',rooms:3,size:95,floor:8,roi:6.8,img:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=80',desc:'קונדו פרמיום עם נוף לאנדמן. קומפלקס עם בריכות וספא.',tags:['נוף לים','ספא','יוקרה'],contact:'054-0000204',date:1710600000,source:'default'},
-  {id:301,title:'דירת 3 חדרות בליסבון, שכונת אלפמה',country:'Portugal',city:'Lisbon',price:385000,deal:'sale',type:'דירה',rooms:3,size:110,floor:3,roi:4.5,img:'https://images.unsplash.com/photo-1548707309-dcebeab9ea9b?w=600&q=80',desc:'דירה בלב ליסבון ההיסטורית. גימורים מסורתיים, נוף לטאגוס.',tags:['היסטורי','Golden Visa'],contact:'054-0000301',date:1712000000,source:'default'},
+  {id:202,title:'וילה עם בריכה בקוסמוי',country:'Thailand',city:'Koh Samui',price:320000,deal:'sale',type:'בית פרטי',rooms:4,size:280,floor:1,roi:6.2,img:'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=600&q=80',desc:'וילה טרופית עם בריכה פרטית.',tags:['וילה','בריכה','Airbnb'],contact:'054-0000202',date:1711000000,source:'default'},
+  {id:301,title:'דירת 3 חדרות בליסבון, שכונת אלפמה',country:'Portugal',city:'Lisbon',price:385000,deal:'sale',type:'דירה',rooms:3,size:110,floor:3,roi:4.5,img:'https://images.unsplash.com/photo-1548707309-dcebeab9ea9b?w=600&q=80',desc:'דירה בלב ליסבון ההיסטורית.',tags:['היסטורי','Golden Visa'],contact:'054-0000301',date:1712000000,source:'default'},
   {id:302,title:'וילה עם בריכה באלגרבה',country:'Portugal',city:'Algarve',price:720000,deal:'sale',type:'בית פרטי',rooms:5,size:320,floor:1,roi:4.8,img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',desc:'וילה מפוארת בחוף הזהב. Golden Visa זכאי.',tags:['Golden Visa','בריכה'],contact:'054-0000302',date:1711800000,source:'default'},
-  {id:303,title:'בית אבן מסורתי בפורטו',country:'Portugal',city:'Porto',price:295000,deal:'sale',type:'בית פרטי',rooms:4,size:165,floor:2,roi:4.2,img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&q=80',desc:'בית פורטוגזי קלאסי. שיפוץ מלא 2023.',tags:['מחודש 2023','UNESCO'],contact:'054-0000303',date:1711600000,source:'default'},
   {id:401,title:'דירת 2 חדרות בברצלונה, איקספמלה',country:'Spain',city:'Barcelona',price:340000,deal:'sale',type:'דירה',rooms:2,size:78,floor:4,roi:4.1,img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',desc:'דירה מודרנית בלב ברצלונה.',tags:['מרכז','תיירות'],contact:'054-0000401',date:1712200000,source:'default'},
-  {id:402,title:'וילה יוקרה במרבייה, Golden Mile',country:'Spain',city:'Marbella',price:1250000,deal:'sale',type:'בית פרטי',rooms:5,size:450,floor:1,roi:3.5,img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80',desc:'וילה יוקרה ב-Golden Mile. בריכה אינפיניטי, ספא.',tags:['Ultra Luxury','Golden Mile'],contact:'054-0000402',date:1712000000,source:'default'},
-  {id:403,title:'סטודיו להשקעה בולנסיה',country:'Spain',city:'Valencia',price:118000,deal:'sale',type:'סטודיו',rooms:1,size:42,floor:2,roi:5.2,img:'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&q=80',desc:'סטודיו בעיר הצומחת. פוטנציאל עליית ערך גבוה.',tags:['צמיחה','פוטנציאל'],contact:'054-0000403',date:1711900000,source:'default'},
-  {id:404,title:'דירת 3 חדרות בקוסטה דל סול',country:'Spain',city:'Malaga',price:225000,deal:'sale',type:'דירה',rooms:3,size:95,floor:6,roi:5.8,img:'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=600&q=80',desc:'דירה עם נוף לים. השכרה עד 1,800€/חודש.',tags:['נוף לים','קוסטה דל סול'],contact:'054-0000404',date:1711700000,source:'default'},
+  {id:402,title:'וילה יוקרה במרבייה, Golden Mile',country:'Spain',city:'Marbella',price:1250000,deal:'sale',type:'בית פרטי',rooms:5,size:450,floor:1,roi:3.5,img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80',desc:'וילה יוקרה ב-Golden Mile.',tags:['Ultra Luxury','Golden Mile'],contact:'054-0000402',date:1712000000,source:'default'},
   {id:501,title:'דירת 1 חדר בדאון טאון דובאי',country:'Dubai',city:'Dubai',price:285000,deal:'sale',type:'דירה',rooms:1,size:65,floor:28,roi:6.5,img:'https://images.unsplash.com/photo-1582407947304-fd86f28f7e27?w=600&q=80',desc:'נוף לבורג׳ חליפה. ללא מס הכנסה.',tags:['Burj View','ללא מס'],contact:'054-0000501',date:1712500000,source:'default'},
-  {id:502,title:'פנטהאוז ב-Palm Jumeirah',country:'Dubai',city:'Dubai',price:2800000,deal:'sale',type:'פנטהאוז',rooms:4,size:380,floor:22,roi:4.2,img:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80',desc:'פנטהאוז אולטרה-יוקרה. בריכה פרטית, נוף 360°.',tags:['Palm Jumeirah','Ultra Luxury'],contact:'054-0000502',date:1712300000,source:'default'},
-  {id:503,title:'דירת 2 חדרות ב-Dubai Marina',country:'Dubai',city:'Dubai',price:420000,deal:'sale',type:'דירה',rooms:2,size:95,floor:15,roi:5.8,img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80',desc:'נוף לתעלה. מרחק הליכה למטרו.',tags:['Marina View','מטרו'],contact:'054-0000503',date:1712100000,source:'default'},
-  {id:504,title:'סטודיו ב-Business Bay להשכרה',country:'Dubai',city:'Dubai',price:2200,deal:'rent',type:'סטודיו',rooms:1,size:45,floor:10,roi:0,img:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80',desc:'סטודיו מרוהט. חוזה גמיש.',tags:['מרוהט','גמיש'],contact:'054-0000504',date:1711900000,source:'default'},
-  {id:601,title:'בית אבן עם נוף לאגאי, סנטוריני',country:'Greece',city:'Santorini',price:480000,deal:'sale',type:'בית פרטי',rooms:3,size:120,floor:1,roi:5.5,img:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=80',desc:'בית עם נוף לקלדרה. Airbnb: 800-1,500€/לילה.',tags:['קלדרה','Airbnb'],contact:'054-0000601',date:1712600000,source:'default'},
-  {id:602,title:'דירה 2 חדרות באתונה, קולונאקי',country:'Greece',city:'Athens',price:185000,deal:'sale',type:'דירה',rooms:2,size:80,floor:3,roi:4.8,img:'https://images.unsplash.com/photo-1555993539-1732b0258235?w=600&q=80',desc:'דירה מחודשת בשכונה היוקרתית. Golden Visa ב-250,000€.',tags:['Golden Visa','קולונאקי'],contact:'054-0000602',date:1712400000,source:'default'},
-  {id:603,title:'וילה מסורתית בכרתים',country:'Greece',city:'Crete',price:320000,deal:'sale',type:'בית פרטי',rooms:4,size:200,floor:1,roi:5.2,img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',desc:'וילה כרתית עם חצר ועצי זית.',tags:['מסורתי','כרתים'],contact:'054-0000603',date:1712200000,source:'default'},
+  {id:502,title:'דירת 2 חדרות ב-Dubai Marina',country:'Dubai',city:'Dubai',price:420000,deal:'sale',type:'דירה',rooms:2,size:95,floor:15,roi:5.8,img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80',desc:'נוף לתעלה. מרחק הליכה למטרו.',tags:['Marina View','מטרו'],contact:'054-0000503',date:1712100000,source:'default'},
+  {id:601,title:'בית אבן עם נוף לאגאי, סנטוריני',country:'Greece',city:'Santorini',price:480000,deal:'sale',type:'בית פרטי',rooms:3,size:120,floor:1,roi:5.5,img:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=80',desc:'בית עם נוף לקלדרה.',tags:['קלדרה','Airbnb'],contact:'054-0000601',date:1712600000,source:'default'},
+  {id:602,title:'דירה 2 חדרות באתונה, קולונאקי',country:'Greece',city:'Athens',price:185000,deal:'sale',type:'דירה',rooms:2,size:80,floor:3,roi:4.8,img:'https://images.unsplash.com/photo-1555993539-1732b0258235?w=600&q=80',desc:'דירה מחודשת. Golden Visa ב-250,000€.',tags:['Golden Visa','קולונאקי'],contact:'054-0000602',date:1712400000,source:'default'},
   {id:701,title:'דירת יוקרה בלימסול, Marine Tower',country:'Cyprus',city:'Limassol',price:395000,deal:'sale',type:'דירה',rooms:2,size:95,floor:14,roi:4.5,img:'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=600&q=80',desc:'נוף פנורמי לים התיכון.',tags:['נוף לים','לימסול'],contact:'054-0000701',date:1712700000,source:'default'},
-  {id:702,title:'וילה חדשה בפאפוס, 5 חדרות',country:'Cyprus',city:'Paphos',price:650000,deal:'sale',type:'בית פרטי',rooms:5,size:280,floor:1,roi:4.0,img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80',desc:'וילה brand new. אזרחות EU.',tags:['EU Residency','חדש'],contact:'054-0000702',date:1712500000,source:'default'},
   {id:801,title:'דירת 3 חדרות בבוקרשט, הרבסטראו',country:'Romania',city:'Bucharest',price:145000,deal:'sale',type:'דירה',rooms:3,size:85,floor:4,roi:6.5,img:'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80',desc:'כלכלה צומחת בתוך האיחוד האירופי.',tags:['EU','צמיחה'],contact:'054-0000801',date:1712300000,source:'default'},
-  {id:802,title:"סטודיו להשקעה בקלוז' נאפוקה",country:'Romania',city:'Cluj-Napoca',price:78000,deal:'sale',type:'סטודיו',rooms:1,size:38,floor:3,roi:7.8,img:'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=600&q=80',desc:'עיר הסטארטאפים. תשואה 7-8%.',tags:['טק','תשואה גבוהה'],contact:'054-0000802',date:1712100000,source:'default'},
   {id:901,title:'אפרטמנט ים בבודוה, Old Town View',country:'Montenegro',city:'Budva',price:165000,deal:'sale',type:'דירה',rooms:2,size:72,floor:5,roi:6.0,img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80',desc:'נוף ל-Old Town. מונטנגרו מועמדת ל-EU.',tags:['Old Town','EU Candidate'],contact:'054-0000901',date:1712400000,source:'default'},
-  {id:902,title:'וילה יוקרה בפורטו מונטנגרו',country:'Montenegro',city:'Tivat',price:890000,deal:'sale',type:'בית פרטי',rooms:4,size:320,floor:1,roi:4.5,img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',desc:'Porto Montenegro — מרינה יוקרתית. עגינת יאכטות.',tags:['Porto Montenegro','יוקרה'],contact:'054-0000902',date:1712200000,source:'default'},
 ];
 
 let properties=[...DEFAULTS];
 let currentDeal='all',currentType='',currentCountry='';
 
 async function loadFromSheets(){
+  const lb=document.getElementById('loading-bar');
   try{
-    const res=await fetch(SHEET_CSV);
-    if(!res.ok) throw new Error('failed');
-    const csv=await res.text();
-    const lines=csv.split('\n');
-    if(lines.length<2) throw new Error('empty');
-    const headers=lines[0].split(',').map(h=>h.trim().replace(/"/g,'').toLowerCase());
-    const parsed=[];
-    for(let i=1;i<lines.length;i++){
-      if(!lines[i].trim()) continue;
-      const cols=lines[i].split(',');
-      const obj={};
-      headers.forEach((h,idx)=>{ obj[h]=(cols[idx]||'').trim().replace(/"/g,''); });
-      if(!obj.title||!obj.country||!obj.price) continue;
-      parsed.push({
-        id:parseInt(obj.id)||Date.now()+i,
-        title:obj.title, country:obj.country, city:obj.city||'',
-        price:parseFloat(obj.price)||0, deal:obj.deal||'sale',
-        type:obj.type||'דירה', rooms:parseInt(obj.rooms)||1,
-        size:parseInt(obj.size)||0, floor:parseInt(obj.floor)||0,
-        roi:parseFloat(obj.roi)||0, img:obj.img||'', desc:obj.desc||'',
-        tags:obj.tags?obj.tags.split('|').map(t=>t.trim()).filter(Boolean):[],
-        contact:obj.contact||'', date:parseInt(obj.date)||Math.floor(Date.now()/1000),
-        source:'sheets'
-      });
-    }
+    const res=await fetch(APPS_SCRIPT_URL);
+    if(!res.ok) throw new Error('fetch failed');
+    const json=await res.json();
+    if(!Array.isArray(json)||json.length===0) throw new Error('empty');
+
+    const parsed=json.map((row,i)=>({
+      id: parseInt(row.id)||Date.now()+i,
+      title: String(row.title||''),
+      country: String(row.country||''),
+      city: String(row.city||''),
+      price: parseFloat(row.price)||0,
+      deal: String(row.deal||'sale'),
+      type: String(row.type||'דירה'),
+      rooms: parseInt(row.rooms)||1,
+      size: parseInt(row.size)||0,
+      floor: parseInt(row.floor)||0,
+      roi: parseFloat(row.roi)||0,
+      img: String(row.img||''),
+      desc: String(row.desc||''),
+      tags: row.tags ? String(row.tags).split('|').map(t=>t.trim()).filter(Boolean) : [],
+      contact: String(row.contact||''),
+      date: parseInt(row.date)||Math.floor(Date.now()/1000),
+      source:'sheets'
+    })).filter(p=>p.title&&p.country&&p.price>0);
+
     if(parsed.length>0){
       const ids=new Set(parsed.map(p=>p.id));
       properties=[...parsed,...DEFAULTS.filter(p=>!ids.has(p.id))];
-      document.getElementById('loading-bar').innerHTML=`✅ נטענו ${parsed.length} נכסים מ-Google Sheets`;
-      setTimeout(()=>document.getElementById('loading-bar').classList.remove('show'),3000);
-      showToast(`📊 ${parsed.length} נכסים נטענו מ-Sheets!`);
+      lb.innerHTML=`✅ נטענו ${parsed.length} נכסים מ-Google Sheets`;
+      setTimeout(()=>lb.classList.remove('show'),3000);
+      showToast(`📊 ${parsed.length} נכסים נטענו מהגיליון!`);
     } else {
-      document.getElementById('loading-bar').innerHTML='📋 גיליון ריק — מציג נכסי דוגמה';
-      setTimeout(()=>document.getElementById('loading-bar').classList.remove('show'),3000);
+      throw new Error('no valid rows');
     }
   } catch(e){
-    document.getElementById('loading-bar').innerHTML='ℹ️ גיליון ריק — מציג 30 נכסי דוגמה';
-    setTimeout(()=>document.getElementById('loading-bar').classList.remove('show'),3000);
+    console.warn('Sheets error:',e);
+    properties=[...DEFAULTS];
+    lb.innerHTML='ℹ️ מציג נכסי דוגמה — לא נמצאו נכסים בגיליון';
+    setTimeout(()=>lb.classList.remove('show'),4000);
   }
-  updateStats(); applyFilters();
+  updateStats();
+  applyFilters();
 }
 
 function updateStats(){
@@ -483,7 +476,7 @@ function addProperty(){
   if(!title||!city||!price){showToast('⚠️ נא למלא כותרת, עיר ומחיר');return;}
   const p={id:Date.now(),title,city,price,roi:0,tags:[],source:'manual',country:document.getElementById('add-country').value,deal:document.getElementById('add-deal').value,type:document.getElementById('add-type').value,rooms:parseInt(document.getElementById('add-rooms').value)||1,size:parseInt(document.getElementById('add-size').value)||0,floor:0,img:document.getElementById('add-img').value.trim(),desc:document.getElementById('add-desc').value.trim(),contact:document.getElementById('add-contact').value.trim(),date:Math.floor(Date.now()/1000)};
   properties.unshift(p);updateStats();applyFilters();closeModal('add-modal');
-  showToast('🎉 נכס נוסף! להוספה קבועה — הוסף לגיליון Sheets');
+  showToast('🎉 נכס נוסף זמנית! להוספה קבועה — הוסף לגיליון Sheets');
   ['add-title','add-city','add-price','add-rooms','add-size','add-img','add-desc','add-contact'].forEach(id=>document.getElementById(id).value='');
 }
 function exportHTML(){const blob=new Blob([document.documentElement.outerHTML],{type:'text/html'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='domifinder.html';a.click();showToast('⬇ הקובץ מיוצא...');}

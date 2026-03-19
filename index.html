@@ -278,7 +278,7 @@ footer strong{color:var(--pr);}
 
 var FLAGS={Georgia:'🇬🇪',Thailand:'🇹🇭',Portugal:'🇵🇹',Spain:'🇪🇸',Dubai:'🇦🇪',Greece:'🇬🇷',Cyprus:'🇨🇾',Romania:'🇷🇴',Montenegro:'🇲🇪'};
 var CHE={Georgia:'גאורגיה',Thailand:'תאילנד',Portugal:'פורטוגל',Spain:'ספרד',Dubai:'דובאי',Greece:'יוון',Cyprus:'קפריסין',Romania:'רומניה',Montenegro:'מונטנגרו'};
-var SURL='https://script.google.com/macros/s/AKfycbzXns3HIGhkGSAqtx3gUw4fV5TeW1zjZm3UPNmv8ilbzrd8k0IjXQpkeGmfdtEU4YVTYg/exec';
+var SURL='https://script.google.com/macros/s/AKfycbwf2SRYbNTUzsL8Ryyz6RqMN5vfPPOPWPKfbQzpNpI1CM1Mb9OnpZLwsIMHOyzBbyJH5A/exec';
 var DEFS=[
   {id:101,title:'דירת 2 חדרות בשכונת ורקה, תביליסי',country:'Georgia',city:'Tbilisi',price:62000,deal:'sale',type:'דירה',rooms:2,size:65,floor:5,roi:8.5,img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80',desc:'דירה מחודשת בשכונת ורקה. תשואה 8-9%.',tags:['מחודש','השקעה'],source:'default',date:1710000000},
   {id:102,title:'פנטהאוז בבאטומי, נוף לים',country:'Georgia',city:'Batumi',price:145000,deal:'sale',type:'פנטהאוז',rooms:3,size:120,floor:18,roi:7.2,img:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80',desc:'פנטהאוז יוקרתי בריביירת הים השחור.',tags:['נוף לים','Airbnb'],source:'default',date:1709500000},
@@ -351,7 +351,7 @@ function updateStats() {
 function imgHtml(p,h,lg) {
   var ph=lg?'modal-ph':'card-ph';
   if(p.img&&p.img.indexOf('http')===0) {
-    return '<img src="'+p.img+'" style="width:100%;height:'+h+'px;object-fit:cover;display:block" onerror="this.parentNode.innerHTML='<div class=&quot;'+ph+'&quot; style=&quot;height:'+h+'px&quot;>'+(FLAGS[p.country]||'🏠')+'<\/div>'">';
+    return '<img src="'+p.img+'" style="width:100%;height:'+h+'px;object-fit:cover;display:block" onerror="this.style.display=\'none\'">';
   }
   return '<div class="'+ph+'" style="height:'+h+'px">'+(FLAGS[p.country]||'🏠')+'</div>';
 }
@@ -376,7 +376,7 @@ function renderGrid(list) {
       '<div class="card-loc">📍 '+p.city+', '+(CHE[p.country]||p.country)+'</div>'+
       '<div class="card-price">'+fmt(p)+'</div>'+
       '<div class="card-meta">'+
-      '<span>🛏 '+p.rooms+' חד'</span>'+
+      '<span>🛏 '+p.rooms+' חד\'</span>'+
       '<span>📐 '+p.size+' מ"ר</span>'+
       (p.floor?'<span>🏢 קומה '+p.floor+'</span>':'')+
       '<span>🏷 '+p.type+'</span>'+

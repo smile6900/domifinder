@@ -153,6 +153,44 @@ footer strong{color:var(--pr);}
   .roadmap-item p{font-size:13px;color:var(--t2);margin:0;}
   @media(max-width:640px){.about-benefits{grid-template-columns:1fr;}}
 
+
+  /* GUIDE PAGE */
+  #guide-section{display:none;max-width:1000px;margin:0 auto;padding:48px 2rem 80px;}
+  .guide-hero{text-align:center;margin-bottom:48px;padding-bottom:36px;border-bottom:1px solid var(--bd);}
+  .guide-hero h2{font-size:2rem;font-weight:800;color:var(--t);margin-bottom:12px;}
+  .guide-hero h2 span{color:var(--pr);}
+  .guide-hero p{font-size:1rem;color:var(--t2);line-height:1.8;max-width:640px;margin:0 auto 8px;}
+  .guide-intro{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:28px 32px;margin-bottom:36px;box-shadow:var(--s1);}
+  .guide-intro h3{font-size:1.1rem;font-weight:800;color:var(--t);margin-bottom:14px;}
+  .guide-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:16px;}
+  .guide-col{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:16px 18px;}
+  .guide-col h4{font-size:12px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
+  .guide-col ul{list-style:none;padding:0;}
+  .guide-col ul li{font-size:13px;color:var(--t2);padding:4px 0;display:flex;align-items:center;gap:8px;}
+  .guide-col ul li::before{content:'•';color:var(--pr);font-weight:700;}
+  .guide-col.neg ul li::before{color:#E74C3C;}
+  .guide-note{background:#EBF5FB;border:1px solid var(--bd);border-radius:8px;padding:12px 16px;margin-top:16px;font-size:13px;color:var(--t2);font-style:italic;}
+  .guide-note strong{color:var(--pr);}
+  .guide-section-title{font-size:1.3rem;font-weight:800;color:var(--t);margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--pr);display:flex;align-items:center;gap:8px;}
+  .countries-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:40px;}
+  .country-card{background:#fff;border:1px solid var(--bd);border-radius:12px;overflow:hidden;box-shadow:var(--s1);transition:all .2s;}
+  .country-card:hover{transform:translateY(-3px);box-shadow:var(--s2);border-color:var(--pl);}
+  .country-card-head{background:linear-gradient(135deg,var(--bh),#D6EAF8);padding:16px 18px;display:flex;align-items:center;gap:12px;}
+  .country-flag{font-size:2rem;}
+  .country-head-info h4{font-size:15px;font-weight:800;color:var(--t);margin-bottom:2px;}
+  .country-head-info .roi-badge{background:var(--pr);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;display:inline-block;}
+  .country-card-body{padding:14px 18px;}
+  .country-desc{font-size:12px;color:var(--t2);line-height:1.6;margin-bottom:10px;}
+  .country-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+  .ctag{font-size:11px;padding:2px 8px;border-radius:5px;font-weight:600;}
+  .ctag.green{background:#EAF7EE;color:#1E8449;border:1px solid #A9DFBF;}
+  .ctag.red{background:#FDEDEC;color:#C0392B;border:1px solid #F5B7B1;}
+  .ctag.blue{background:#EBF5FB;color:var(--pr);border:1px solid var(--bd);}
+  .country-meta{display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--bd);font-size:11px;color:var(--t3);}
+  .country-meta span strong{color:var(--t);font-weight:700;}
+  .guide-fit{font-size:12px;color:var(--pr);font-weight:600;margin-top:8px;}
+  @media(max-width:640px){.guide-cols{grid-template-columns:1fr;}.countries-grid{grid-template-columns:1fr;}}
+
 </style>
 </head>
 <body>
@@ -161,7 +199,7 @@ footer strong{color:var(--pr);}
   <ul class="nav-links">
     <li><a href="javascript:void(0)" onclick="showSection('home')">נכסים</a></li>
     <li><a href="#">מדינות</a></li>
-    <li><a href="#">מדריך למשקיע</a></li>
+    <li><a href="javascript:void(0)" onclick="showSection('guide')">מדריך למשקיע</a></li>
     <li><a href="javascript:void(0)" onclick="showSection('about')">אודות</a></li>
   </ul>
   <div class="nav-right">
@@ -300,6 +338,489 @@ footer strong{color:var(--pr);}
 </div>
 
 </div><!-- end home-section -->
+
+<!-- GUIDE SECTION -->
+<div id="guide-section">
+  <div class="guide-hero">
+    <h2>🔷 מדריך <span>המשקיע</span></h2>
+    <p>כל מה שצריך לדעת לפני שמשקיעים בנדל"ן בחו"ל</p>
+    <p style="font-size:0.9rem;color:var(--t3);">מידע, נתונים ותובנות — לא שיווק</p>
+  </div>
+
+  <div class="guide-intro">
+    <h3>🎯 הקדמה – למה בכלל להשקיע בחו"ל?</h3>
+    <p style="font-size:13px;color:var(--t2);line-height:1.8;">אם להיות ישירים – נדל"ן בישראל נהיה קשה. מחירים גבוהים מאוד, תשואות נמוכות יחסית, וחסמי כניסה משמעותיים. לעומת זאת, השקעה בחו"ל פותחת עולם של אפשרויות.</p>
+    <div class="guide-cols">
+      <div class="guide-col">
+        <h4>✅ יתרונות ההשקעה בחו"ל</h4>
+        <ul>
+          <li>מחירים נגישים יותר</li>
+          <li>פיזור סיכונים בין מדינות</li>
+          <li>תשואות גבוהות יותר</li>
+          <li>מגוון רחב של נכסים ושווקים</li>
+        </ul>
+      </div>
+      <div class="guide-col neg">
+        <h4>⚠️ חשוב לדעת</h4>
+        <ul>
+          <li>זה לא כסף קל</li>
+          <li>מי שלא בודק, משלם</li>
+          <li>צריך להבין את השוק המקומי</li>
+          <li>ניהול מרחוק דורש תכנון</li>
+        </ul>
+      </div>
+    </div>
+    <div class="guide-note"><strong>המדריך הזה</strong> נועד לתת לך תמונה ברורה, כדי לקבל החלטות חכמות – לא מבוססות שיווק.</div>
+  </div>
+
+  <div class="guide-section-title">🌍 מדריך מדינות להשקעה</div>
+
+  <div class="countries-grid">
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇺🇸</div>
+        <div class="country-head-info">
+          <h4>ארצות הברית</h4>
+          <span class="roi-badge">6%–10% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק ענק ומפוצל לאזורים. כל מדינה מתנהגת אחרת — טקסס, פלורידה, אוהיו הם האזורים המובילים.</p>
+        <div class="country-tags">
+          <span class="ctag green">שוק שקוף</span>
+          <span class="ctag green">ביקוש יציב</span>
+          <span class="ctag red">ניהול מרחוק</span>
+          <span class="ctag red">מורכבות מס</span>
+        </div>
+        <div class="country-meta">
+          <span>מיסוי: <strong>משתנה</strong></span>
+          <span>נכסים: <strong>בתים, דירות</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: מחפשי איזון בין יציבות לתשואה</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇬🇷</div>
+        <div class="country-head-info">
+          <h4>יוון</h4>
+          <span class="roi-badge">4%–8% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק תיירות חזק עם פוטנציאל להכנסות גבוהות. אתונה, סלוניקי והאיים הם האזורים המובילים.</p>
+        <div class="country-tags">
+          <span class="ctag green">קרוב לישראל</span>
+          <span class="ctag green">ביקוש תיירותי</span>
+          <span class="ctag red">עונתיות</span>
+          <span class="ctag red">בירוקרטיה</span>
+        </div>
+        <div class="country-meta">
+          <span>מיסוי: <strong>15%–22%</strong></span>
+          <span>נכסים: <strong>דירות נופש, Airbnb</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: מחפשי תשואה מהשכרות קצרות</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇨🇾</div>
+        <div class="country-head-info">
+          <h4>קפריסין</h4>
+          <span class="roi-badge">7%–10% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק קטן אך נגיש ופשוט מאוד לישראלים. לימסול ולרנקה הן הערים המובילות.</p>
+        <div class="country-tags">
+          <span class="ctag green">קלות רכישה</span>
+          <span class="ctag green">קרבה לישראל</span>
+          <span class="ctag blue">מיסוי נמוך</span>
+          <span class="ctag red">פוטנציאל מוגבל</span>
+        </div>
+        <div class="country-meta">
+          <span>מיסוי: <strong>נמוך</strong></span>
+          <span>נכסים: <strong>דירות מגורים</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: משקיעים מתחילים</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇵🇱</div>
+        <div class="country-head-info">
+          <h4>פולין</h4>
+          <span class="roi-badge">7%–11% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">כלכלה בצמיחה עם ביקוש חזק לשכירות. ורשה וקרקוב הן הערים המובילות.</p>
+        <div class="country-tags">
+          <span class="ctag green">יציבות + צמיחה</span>
+          <span class="ctag blue">~8.5% מס</span>
+        </div>
+        <div class="country-meta">
+          <span>מיסוי: <strong>~8.5%</strong></span>
+          <span>נכסים: <strong>דירות להשכרה</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: מחפשי איזון</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇵🇹</div>
+        <div class="country-head-info">
+          <h4>פורטוגל</h4>
+          <span class="roi-badge">6%–9% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק מערבי עם ביקוש בינלאומי. ליסבון ופורטו הן המרכזים המובילים.</p>
+        <div class="country-tags">
+          <span class="ctag green">יציבות גבוהה</span>
+          <span class="ctag red">מיסוי ~25%</span>
+        </div>
+        <div class="country-meta">
+          <span>מיסוי: <strong>~25%</strong></span>
+          <span>נכסים: <strong>דירות, נכסי תיירות</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: משקיעים סולידיים</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇬🇪</div>
+        <div class="country-head-info">
+          <h4>גיאורגיה</h4>
+          <span class="roi-badge">7%–11% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק עם פוטנציאל תשואה גבוה. בטומי וטביליסי הן הערים המובילות.</p>
+        <div class="country-tags">
+          <span class="ctag green">תשואה גבוהה</span>
+          <span class="ctag blue">~5% מס</span>
+          <span class="ctag red">סיכון גבוה</span>
+        </div>
+        <div class="country-meta">
+          <span>מיסוי: <strong>~5%</strong></span>
+          <span>נכסים: <strong>דירות קטנות</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: מחפשי רווח גבוה</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇦🇪</div>
+        <div class="country-head-info">
+          <h4>דובאי</h4>
+          <span class="roi-badge">6%–10% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק מתפתח עם יתרון מיסוי משמעותי — 0% מס הכנסה.</p>
+        <div class="country-tags">
+          <span class="ctag green">0% מס</span>
+          <span class="ctag green">שוק בצמיחה</span>
+          <span class="ctag red">תנודתיות</span>
+        </div>
+        <div class="country-meta">
+          <span>מיסוי: <strong>0%</strong></span>
+          <span>נכסים: <strong>דירות יוקרה</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: משקיעי יוקרה</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇩🇪</div>
+        <div class="country-head-info">
+          <h4>גרמניה</h4>
+          <span class="roi-badge">4%–8% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק יציב מאוד עם רגולציה חזקה. ברלין ולייפציג הן הערים המובילות.</p>
+        <div class="country-tags">
+          <span class="ctag green">יציבות גבוהה</span>
+          <span class="ctag red">רגולציה מחמירה</span>
+          <span class="ctag red">מיסוי גבוה</span>
+        </div>
+        <div class="country-meta">
+          <span>מיסוי: <strong>גבוה</strong></span>
+          <span>נכסים: <strong>דירות מגורים</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: משקיעים סולידיים</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇬🇧</div>
+        <div class="country-head-info">
+          <h4>אנגליה</h4>
+          <span class="roi-badge">6%–9% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק מבוסס עם ביקוש גבוה. מנצ'סטר וליברפול הן הערים המובילות.</p>
+        <div class="country-tags">
+          <span class="ctag green">שוק חזק</span>
+          <span class="ctag red">עלות כניסה גבוהה</span>
+          <span class="ctag red">מיסוי בינוני-גבוה</span>
+        </div>
+        <div class="country-meta">
+          <span>מיסוי: <strong>בינוני-גבוה</strong></span>
+          <span>נכסים: <strong>דירות להשכרה</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: משקיעים מנוסים</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇷🇴</div>
+        <div class="country-head-info">
+          <h4>רומניה</h4>
+          <span class="roi-badge">6%–9% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק מתפתח עם מחירים נמוכים. בוקרשט היא העיר המובילה.</p>
+        <div class="country-tags">
+          <span class="ctag green">מחיר נמוך</span>
+          <span class="ctag blue">EU</span>
+          <span class="ctag red">סיכון בינוני</span>
+        </div>
+        <div class="country-meta">
+          <span>מיסוי: <strong>9%–16%</strong></span>
+          <span>נכסים: <strong>דירות</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: מחפשי כניסה זולה</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇭🇺</div>
+        <div class="country-head-info">
+          <h4>הונגריה</h4>
+          <span class="roi-badge">4%–8% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק עירוני חזק. בודפשט היא המרכז המוביל.</p>
+        <div class="country-tags">
+          <span class="ctag green">ביקוש גבוה</span>
+          <span class="ctag blue">EU</span>
+          <span class="ctag red">תנודתיות</span>
+        </div>
+        <div class="country-meta">
+          <span>נכסים: <strong>דירות</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: משקיעים ב-EU</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇪🇸</div>
+        <div class="country-head-info">
+          <h4>ספרד</h4>
+          <span class="roi-badge">5%–8% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק תיירות חזק מאוד. ברצלונה ומדריד הן הערים המובילות.</p>
+        <div class="country-tags">
+          <span class="ctag green">תיירות חזקה</span>
+          <span class="ctag red">רגולציה משתנה</span>
+        </div>
+        <div class="country-meta">
+          <span>נכסים: <strong>דירות, נופש</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: מחפשי Airbnb</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇮🇹</div>
+        <div class="country-head-info">
+          <h4>איטליה</h4>
+          <span class="roi-badge">4%–7% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק מגוון אך מורכב. רומא ומילאנו הן המרכזים המובילים.</p>
+        <div class="country-tags">
+          <span class="ctag green">מגוון</span>
+          <span class="ctag red">בירוקרטיה</span>
+        </div>
+        <div class="country-meta">
+          <span>נכסים: <strong>דירות, וילות</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇫🇷</div>
+        <div class="country-head-info">
+          <h4>צרפת</h4>
+          <span class="roi-badge">3%–6% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק יציב מאוד. פריז היא המרכז המוביל.</p>
+        <div class="country-tags">
+          <span class="ctag green">ביטחון גבוה</span>
+          <span class="ctag red">תשואה נמוכה</span>
+        </div>
+        <div class="country-meta">
+          <span>נכסים: <strong>דירות</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: שמרנים</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇹🇷</div>
+        <div class="country-head-info">
+          <h4>טורקיה</h4>
+          <span class="roi-badge">7%–12% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק עם פוטנציאל גבוה אך לא יציב. סיכון גבוה עם תשואה גבוהה.</p>
+        <div class="country-tags">
+          <span class="ctag green">תשואה גבוהה</span>
+          <span class="ctag red">סיכון גבוה</span>
+          <span class="ctag red">חוסר יציבות</span>
+        </div>
+        <div class="country-meta">
+          <span>נכסים: <strong>דירות, נופש</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: נוטלי סיכון</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇹🇭</div>
+        <div class="country-head-info">
+          <h4>תאילנד</h4>
+          <span class="roi-badge">5%–9% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק תיירותי חזק עם ביקוש גבוה לנכסי נופש.</p>
+        <div class="country-tags">
+          <span class="ctag green">תיירות חזקה</span>
+          <span class="ctag red">מגבלות על זרים</span>
+        </div>
+        <div class="country-meta">
+          <span>נכסים: <strong>קונדו, וילות</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: מחפשי Airbnb</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇧🇬</div>
+        <div class="country-head-info">
+          <h4>בולגריה</h4>
+          <span class="roi-badge">6%–9% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">מחירי כניסה נמוכים מאוד. שוק מתפתח בתוך האיחוד האירופי.</p>
+        <div class="country-tags">
+          <span class="ctag green">כניסה זולה</span>
+          <span class="ctag blue">EU</span>
+        </div>
+        <div class="country-meta">
+          <span>נכסים: <strong>דירות</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: כניסה ראשונה לשוק</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇵🇱🇨🇿</div>
+        <div class="country-head-info">
+          <h4>פולין / צ'כיה</h4>
+          <span class="roi-badge">4%–11% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שווקים בצמיחה בלב אירופה. ורשה, קרקוב ופראג הן המרכזים.</p>
+        <div class="country-tags">
+          <span class="ctag green">צמיחה</span>
+          <span class="ctag blue">EU</span>
+          <span class="ctag blue">מיסוי סביר</span>
+        </div>
+        <div class="country-meta">
+          <span>נכסים: <strong>דירות להשכרה</strong></span>
+        </div>
+        <div class="guide-fit">👤 למי: מחפשי EU בצמיחה</div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇲🇽</div>
+        <div class="country-head-info">
+          <h4>מקסיקו</h4>
+          <span class="roi-badge">7%–10% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק תיירותי עם פוטנציאל גבוה. קנקון ופלאייה דל קרמן הם האזורים המובילים.</p>
+        <div class="country-tags">
+          <span class="ctag green">תיירות חזקה</span>
+          <span class="ctag green">פוטנציאל גבוה</span>
+        </div>
+        <div class="country-meta">
+          <span>נכסים: <strong>נכסי נופש</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="country-card">
+      <div class="country-card-head">
+        <div class="country-flag">🇯🇵</div>
+        <div class="country-head-info">
+          <h4>יפן</h4>
+          <span class="roi-badge">4%–7% תשואה</span>
+        </div>
+      </div>
+      <div class="country-card-body">
+        <p class="country-desc">שוק יציב אך מורכב. טוקיו ואוסקה הם המרכזים המובילים.</p>
+        <div class="country-tags">
+          <span class="ctag green">יציבות</span>
+          <span class="ctag red">מורכבות</span>
+        </div>
+        <div class="country-meta">
+          <span>נכסים: <strong>דירות</strong></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- ABOUT SECTION -->
 <div id="about-section">
   <div class="about-hero">
@@ -562,17 +1083,23 @@ updateStats();filter();loadSheets();
 function showSection(name) {
   var home = document.getElementById('home-section');
   var about = document.getElementById('about-section');
+  var guide = document.getElementById('guide-section');
   var footer = document.querySelector('footer');
+  // Hide all
+  if (home) home.style.display = 'none';
+  if (about) about.style.display = 'none';
+  if (guide) guide.style.display = 'none';
+  if (footer) footer.style.display = 'none';
+  // Show selected
   if (name === 'about') {
-    if (home) home.style.display = 'none';
-    about.style.display = 'block';
-    if (footer) footer.style.display = 'none';
-    window.scrollTo(0, 0);
+    if (about) about.style.display = 'block';
+  } else if (name === 'guide') {
+    if (guide) guide.style.display = 'block';
   } else {
     if (home) home.style.display = '';
-    about.style.display = 'none';
     if (footer) footer.style.display = '';
   }
+  window.scrollTo(0, 0);
 }
 
 </script>
